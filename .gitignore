@@ -3,9 +3,10 @@
 # dependencies
 node_modules/
 
-# Expo
+# Expo (vendor/*/dist is NOT ignored — those are committed TS
+# project-reference declaration outputs, not disposable build artifacts)
 .expo/
-dist/
+/dist/
 web-build/
 expo-env.d.ts
 

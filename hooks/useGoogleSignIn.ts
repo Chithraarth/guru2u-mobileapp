@@ -1,36 +1,44 @@
-import { useEffect } from 'react';
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import { signInWithGoogleIdToken } from '@/lib/firebase';
-
-WebBrowser.maybeCompleteAuthSession();
+import { useCallback } from 'react';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { signInWithGoogleTokens } from '@/lib/firebase';
 
 const realWebClientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
-const realIosClientId = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID;
-const realAndroidClientId = process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID;
-export const isGoogleSignInConfigured = !!(realWebClientId || realIosClientId || realAndroidClientId);
-const PLACEHOLDER = 'not-configured.apps.googleusercontent.com';
+export const isGoogleSignInConfigured = !!realWebClientId;
+
+if (realWebClientId) {
+  GoogleSignin.configure({ webClientId: realWebClientId });
+}
+
+// Normalizes @react-native-google-signin's native status codes (which don't
+// share Firebase's "auth/..." namespace) into codes the app's error message
+// mapping can recognize, so failures don't all collapse into a generic error.
+function normalizeGoogleSignInError(err: unknown): Error {
+  const code = (err as { code?: string })?.code;
+  if (code === statusCodes.SIGN_IN_CANCELLED) {
+    return Object.assign(new Error('Sign-in was cancelled.'), { code: 'auth/popup-closed-by-user' });
+  }
+  if (code === statusCodes.IN_PROGRESS) {
+    return Object.assign(new Error('Sign-in already in progress.'), { code: 'auth/cancelled-popup-request' });
+  }
+  return err instanceof Error ? err : new Error('Google sign-in failed');
+}
 
 export function useGoogleSignIn(onError: (message: string) => void) {
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    webClientId: realWebClientId ?? PLACEHOLDER,
-    iosClientId: realIosClientId ?? PLACEHOLDER,
-    androidClientId: realAndroidClientId ?? PLACEHOLDER,
-  });
-
-  useEffect(() => {
-    if (response?.type === 'success') {
-      const idToken = response.params.id_token;
-      if (idToken) {
-        signInWithGoogleIdToken(idToken).catch((err) =>
-          onError(err instanceof Error ? err.message : 'Google sign-in failed')
-        );
-      }
-    } else if (response?.type === 'error') {
-      onError(response.error?.message ?? 'Google sign-in was cancelled');
+  const promptAsync = useCallback(async () => {
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      const result = await GoogleSignin.signIn();
+      const idToken = result.data?.idToken;
+      if (!idToken) throw new Error('Google sign-in did not return an ID token');
+      // Firebase's GoogleAuthProvider.credential requires a non-empty
+      // accessToken alongside the idToken.
+      const { accessToken } = await GoogleSignin.getTokens();
+      await signInWithGoogleTokens(idToken, accessToken);
+    } catch (err) {
+      const normalized = normalizeGoogleSignInError(err);
+      onError(normalized.message);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response]);
+  }, [onError]);
 
-  return { canSignIn: isGoogleSignInConfigured && !!request, promptAsync };
+  return { canSignIn: isGoogleSignInConfigured, promptAsync };
 }

@@ -153,6 +153,9 @@ export default function SignUpScreen() {
             </>
           ) : (
             <>
+              <Text style={{ color: c.mutedForeground, fontFamily: 'Inter_400Regular', fontSize: 13 }}>
+                {t('mobile.auth.codeSentTo', { phone: phone.trim() })}
+              </Text>
               <AuthInput
                 label={t('mobile.auth.verificationCode')}
                 value={code}
@@ -162,18 +165,30 @@ export default function SignUpScreen() {
               />
               <FieldError message={error ?? undefined} />
               <PrimaryButton title={t('mobile.auth.verify')} onPress={handleVerifyOtp} disabled={!code} loading={busy} />
+              <Text
+                onPress={() => {
+                  setError(null);
+                  setVerificationId(null);
+                  setCode('');
+                }}
+                style={{ color: c.primary, fontFamily: 'Inter_500Medium', textAlign: 'center', padding: 8 }}
+              >
+                {t('mobile.auth.needNewCode')}
+              </Text>
             </>
           )}
-          <Text
-            onPress={() => {
-              setError(null);
-              setUsePhone(false);
-              setVerificationId(null);
-            }}
-            style={{ color: c.primary, fontFamily: 'Inter_500Medium', textAlign: 'center', padding: 8 }}
-          >
-            Use email instead
-          </Text>
+          {!verificationId ? (
+            <Text
+              onPress={() => {
+                setError(null);
+                setUsePhone(false);
+                setVerificationId(null);
+              }}
+              style={{ color: c.primary, fontFamily: 'Inter_500Medium', textAlign: 'center', padding: 8 }}
+            >
+              Use email instead
+            </Text>
+          ) : null}
         </>
       )}
 

@@ -22,7 +22,12 @@
       }
     },
     "android": {
-      "permissions": ["android.permission.RECORD_AUDIO", "android.permission.CAMERA"]
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ],
+      "package": "com.anonymous.personamobile",
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/images/icon.png"
@@ -30,7 +35,13 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      "./plugins/withWindowsNinjaFix.js",
+      "./plugins/withReleaseSigning.js",
+      "expo-localization",
+      "expo-audio",
+      "expo-asset",
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true,

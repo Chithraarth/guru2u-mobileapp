@@ -55,7 +55,7 @@ export function confirmPhoneOtp(verificationId: string, code: string) {
   return signInWithCredential(auth, credential);
 }
 
-export function signInWithGoogleIdToken(idToken: string) {
-  const credential = GoogleAuthProvider.credential(idToken);
+export function signInWithGoogleTokens(idToken: string, accessToken: string) {
+  const credential = GoogleAuthProvider.credential(idToken, accessToken);
   return signInWithCredential(auth, credential);
 }

@@ -13,6 +13,7 @@ import {
 } from '@expo-google-fonts/inter';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import IntroScreen from '@/components/IntroScreen';
 import { AuthProvider, useAuth } from '@/lib/authContext';
 import { getIdToken } from '@/lib/firebase';
 import { setBaseUrl, setAuthTokenGetter } from '@workspace/api-client-react';
@@ -71,7 +72,6 @@ function RootLayoutNav() {
         <Stack.Screen name="insight" options={{ title: '' }} />
         <Stack.Screen name="reading/[id]" options={{ title: '' }} />
         <Stack.Screen name="paywall" options={{ title: t('mobile.paywall.screenTitle') }} />
-        <Stack.Screen name="settings" options={{ title: t('mobile.settings.title') }} />
       </Stack.Protected>
     </Stack>
   );
@@ -85,18 +85,23 @@ export default function RootLayout() {
     Inter_700Bold,
   });
   const [langLoaded, setLangLoaded] = React.useState(false);
+  const [showIntro, setShowIntro] = React.useState(true);
 
   useEffect(() => {
     i18nReady.finally(() => setLangLoaded(true));
   }, []);
 
-  useEffect(() => {
-    if ((fontsLoaded || fontError) && langLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError, langLoaded]);
+  const ready = (fontsLoaded || fontError) && langLoaded;
 
-  if ((!fontsLoaded && !fontError) || !langLoaded) return null;
+  useEffect(() => {
+    if (!ready) return;
+    SplashScreen.hideAsync();
+    const timer = setTimeout(() => setShowIntro(false), 1800);
+    return () => clearTimeout(timer);
+  }, [ready]);
+
+  if (!ready) return null;
+  if (showIntro) return <IntroScreen />;
 
   return (
     <AuthProvider>

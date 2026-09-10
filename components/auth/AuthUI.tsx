@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
-  Platform,
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
@@ -8,25 +8,10 @@ import {
   View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import * as WebBrowser from 'expo-web-browser';
 import { useGoogleSignIn } from '@/hooks/useGoogleSignIn';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '@/hooks/useColors';
 import colors from '@/constants/colors';
-
-// Preloads the browser for Android devices to reduce authentication load time
-export function useWarmUpBrowser() {
-  useEffect(() => {
-    if (Platform.OS !== 'android') return;
-    void WebBrowser.warmUpAsync();
-    return () => {
-      void WebBrowser.coolDownAsync();
-    };
-  }, []);
-}
-
-// Handle any pending authentication sessions
-WebBrowser.maybeCompleteAuthSession();
 
 export function AuthHeader({ title, subtitle }: { title: string; subtitle: string }) {
   const c = useColors();
@@ -106,10 +91,10 @@ export function FieldError({ message }: { message?: string }) {
 }
 
 export function GoogleButton({ onError }: { onError?: (message: string) => void }) {
-  useWarmUpBrowser();
   const c = useColors();
   const { t } = useTranslation();
   const [localError, setLocalError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
   const { canSignIn, promptAsync } = useGoogleSignIn(onError ?? setLocalError);
 
   const onPress = useCallback(async () => {
@@ -117,25 +102,35 @@ export function GoogleButton({ onError }: { onError?: (message: string) => void 
       (onError ?? setLocalError)("Google sign-in isn't configured yet.");
       return;
     }
-    await promptAsync();
+    setBusy(true);
+    try {
+      await promptAsync();
+    } finally {
+      setBusy(false);
+    }
   }, [canSignIn, promptAsync, onError]);
 
   return (
     <>
       <Pressable
         onPress={onPress}
+        disabled={busy}
         style={({ pressed }) => [
           styles.googleButton,
           {
             borderColor: c.border,
             backgroundColor: c.card,
-            opacity: pressed ? 0.85 : 1,
+            opacity: busy ? 0.7 : pressed ? 0.85 : 1,
           },
         ]}
       >
-        <Feather name="chrome" size={18} color={c.foreground} />
+        {busy ? (
+          <ActivityIndicator size="small" color={c.foreground} />
+        ) : (
+          <Feather name="chrome" size={18} color={c.foreground} />
+        )}
         <Text style={{ color: c.foreground, fontFamily: 'Inter_600SemiBold', fontSize: 15 }}>
-          {t('mobile.auth.continueWithGoogle')}
+          {busy ? t('mobile.auth.signingIn') : t('mobile.auth.continueWithGoogle')}
         </Text>
       </Pressable>
       {!onError && localError ? <FieldError message={localError} /> : null}

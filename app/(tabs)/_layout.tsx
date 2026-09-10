@@ -21,6 +21,10 @@ function NativeTabLayout() {
         <Icon sf={{ default: 'book.closed', selected: 'book.closed.fill' }} />
         <Label>{t('nav.history')}</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="profile">
+        <Icon sf={{ default: 'person.crop.circle', selected: 'person.crop.circle.fill' }} />
+        <Label>{t('nav.profile')}</Label>
+      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
@@ -85,6 +89,18 @@ function ClassicTabLayout() {
               <SymbolView name="book.closed" tintColor={color} size={24} />
             ) : (
               <Feather name="book" size={22} color={color} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: t('nav.profile'),
+          tabBarIcon: ({ color }) =>
+            isIOS ? (
+              <SymbolView name="person.crop.circle" tintColor={color} size={24} />
+            ) : (
+              <Feather name="user" size={22} color={color} />
             ),
         }}
       />

@@ -60,34 +60,6 @@ export default function HomeScreen() {
         gap: 14,
       }}
     >
-      <Pressable
-        testID="open-settings"
-        onPress={() => go('/settings')}
-        style={({ pressed }) => ({
-          position: 'absolute',
-          top: topPad,
-          left: 20,
-          padding: 8,
-          opacity: pressed ? 0.7 : 1,
-          zIndex: 10,
-        })}
-      >
-        <Feather name="settings" size={22} color={c.mutedForeground} />
-      </Pressable>
-      <Pressable
-        testID="open-paywall"
-        onPress={() => go('/paywall')}
-        style={({ pressed }) => ({
-          position: 'absolute',
-          top: topPad,
-          right: 20,
-          padding: 8,
-          opacity: pressed ? 0.7 : 1,
-          zIndex: 10,
-        })}
-      >
-        <Feather name="user" size={22} color={c.mutedForeground} />
-      </Pressable>
       <View style={{ alignItems: 'center', gap: 4, marginBottom: 6 }}>
         <MaterialCommunityIcons name="star-four-points" size={24} color={c.accent} />
         <Text style={{ color: c.foreground, fontFamily: 'Inter_700Bold', fontSize: 22 }}>
@@ -139,7 +111,7 @@ export default function HomeScreen() {
         <Feather name="chevron-right" size={20} color={c.primaryForeground} />
       </Pressable>
 
-      <View style={{ flexDirection: 'row', gap: 10 }}>
+      <View style={{ gap: 10 }}>
         {modes.map((m) => (
           <Pressable
             key={m.route}
@@ -159,14 +131,15 @@ export default function HomeScreen() {
             </View>
             <Text
               style={{
+                flex: 1,
                 color: c.foreground,
                 fontFamily: 'Inter_600SemiBold',
-                fontSize: 13,
-                textAlign: 'center',
+                fontSize: 15,
               }}
             >
               {m.title}
             </Text>
+            <Feather name="chevron-right" size={20} color={c.mutedForeground} />
           </Pressable>
         ))}
       </View>
@@ -191,13 +164,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tile: {
-    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 14,
     borderWidth: 1,
     borderRadius: colors.radius,
     paddingVertical: 14,
-    paddingHorizontal: 4,
+    paddingHorizontal: 16,
   },
   tileIconWrap: {
     width: 42,
