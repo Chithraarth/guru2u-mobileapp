@@ -37,9 +37,9 @@ export default function SettingsScreen() {
     >
       <Text
         style={{
-          color: c.mutedForeground,
-          fontFamily: 'Inter_600SemiBold',
-          fontSize: 13,
+          color: c.accent,
+          fontFamily: 'DMSans_600SemiBold',
+          fontSize: 12,
           textTransform: 'uppercase',
           letterSpacing: 1,
           marginBottom: 12,
@@ -52,7 +52,8 @@ export default function SettingsScreen() {
         style={{
           borderWidth: 1,
           borderColor: c.border,
-          borderRadius: colors.radius,
+          borderRadius: colors.radiusLg,
+          backgroundColor: c.card,
           overflow: 'hidden',
         }}
       >
@@ -70,25 +71,22 @@ export default function SettingsScreen() {
                 justifyContent: 'space-between',
                 paddingVertical: 14,
                 paddingHorizontal: 16,
-                backgroundColor: pressed
-                  ? c.muted
-                  : selected
-                    ? c.card
-                    : 'transparent',
+                minHeight: 52,
+                backgroundColor: pressed ? c.muted : selected ? c.secondary : 'transparent',
                 borderTopWidth: idx === 0 ? 0 : 1,
-                borderTopColor: c.border,
+                borderTopColor: c.secondary,
               })}
             >
               <Text
                 style={{
-                  color: selected ? c.primary : c.foreground,
-                  fontFamily: selected ? 'Inter_600SemiBold' : 'Inter_400Regular',
+                  color: selected ? c.accent : c.foreground,
+                  fontFamily: selected ? 'DMSans_600SemiBold' : 'DMSans_400Regular',
                   fontSize: 16,
                 }}
               >
                 {lang.nativeName}
               </Text>
-              {selected ? <Feather name="check" size={20} color={c.primary} /> : null}
+              {selected ? <Feather name="check" size={20} color={c.accent} /> : null}
             </Pressable>
           );
         })}

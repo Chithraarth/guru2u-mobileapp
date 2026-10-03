@@ -1,50 +1,35 @@
-import React, { useRef, useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
 import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Feather } from '@expo/vector-icons';
+import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
 import {
+  AltAuthButton,
   AuthHeader,
   AuthInput,
   FieldError,
   GoogleButton,
   OrDivider,
+  friendlyAuthError,
 } from '@/components/auth/AuthUI';
-import { RecaptchaModal, type RecaptchaModalHandle } from '@/components/RecaptchaModal';
+import { PhoneAuth } from '@/components/auth/PhoneAuth';
 import { PrimaryButton } from '@/components/ui';
 import { useColors } from '@/hooks/useColors';
-import { confirmPhoneOtp, firebaseConfig, signInWithEmail } from '@/lib/firebase';
-
-function friendlyError(err: unknown): string {
-  const message = err instanceof Error ? err.message : String(err);
-  const match = /\(auth\/([a-z-]+)\)/.exec(message);
-  const code = match?.[1];
-  const known: Record<string, string> = {
-    'invalid-credential': 'Incorrect email or password.',
-    'invalid-email': 'Please enter a valid email address.',
-    'invalid-phone-number': 'Please enter a valid phone number, including country code.',
-    'invalid-verification-code': 'That code is incorrect. Please try again.',
-    'too-many-requests': 'Too many attempts. Please wait a moment and try again.',
-  };
-  return (code && known[code]) || message.replace(/^Firebase:\s*/, '').replace(/\s*\(auth\/[a-z-]+\)\.?$/, '');
-}
+import { signInWithEmail } from '@/lib/firebase';
+import fonts from '@/constants/fonts';
 
 export default function SignInScreen() {
   const c = useColors();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const recaptchaRef = useRef<RecaptchaModalHandle>(null);
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usePhone, setUsePhone] = useState(false);
-
-  const [emailAddress, setEmailAddress] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [phone, setPhone] = useState('');
-  const [verificationId, setVerificationId] = useState<string | null>(null);
-  const [code, setCode] = useState('');
+  const [emailAddress, setEmailAddress] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async () => {
     setError(null);
@@ -52,33 +37,7 @@ export default function SignInScreen() {
     try {
       await signInWithEmail(emailAddress.trim(), password);
     } catch (err) {
-      setError(friendlyError(err));
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleSendOtp = async () => {
-    setError(null);
-    setBusy(true);
-    try {
-      const id = await recaptchaRef.current!.sendOtp(phone.trim());
-      setVerificationId(id);
-    } catch (err) {
-      setError(friendlyError(err));
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (!verificationId) return;
-    setError(null);
-    setBusy(true);
-    try {
-      await confirmPhoneOtp(verificationId, code.trim());
-    } catch (err) {
-      setError(friendlyError(err));
+      setError(friendlyAuthError(err));
     } finally {
       setBusy(false);
     }
@@ -88,21 +47,18 @@ export default function SignInScreen() {
     <KeyboardAwareScrollViewCompat
       style={{ flex: 1, backgroundColor: c.background }}
       contentContainerStyle={{
-        padding: 24,
-        paddingTop: insets.top + 60,
-        paddingBottom: 60,
-        gap: 14,
+        flexGrow: 1,
+        paddingHorizontal: 24,
+        paddingTop: insets.top + (usePhone ? 12 : 40),
+        paddingBottom: insets.bottom + 32,
+        gap: 18,
       }}
     >
-      <AuthHeader
-        title={t('mobile.auth.signInTitle')}
-        subtitle={t('mobile.auth.signInSubtitle')}
-      />
-      <GoogleButton onError={setError} />
-      <OrDivider />
-
-      {!usePhone ? (
+      {usePhone ? (
+        <PhoneAuth onUseEmail={() => setUsePhone(false)} />
+      ) : (
         <>
+          <AuthHeader title={t('mobile.auth.signInTitle')} subtitle={t('mobile.auth.signInSubtitle')} />
           <AuthInput
             label={t('mobile.auth.emailLabel')}
             autoCapitalize="none"
@@ -110,88 +66,57 @@ export default function SignInScreen() {
             placeholder={t('mobile.auth.emailPlaceholder')}
             onChangeText={setEmailAddress}
             keyboardType="email-address"
+            textContentType="emailAddress"
+            autoComplete="email"
           />
           <AuthInput
             label={t('mobile.auth.passwordLabel')}
             value={password}
             placeholder={t('mobile.auth.passwordPlaceholder')}
             secureTextEntry
+            textContentType="password"
+            autoComplete="current-password"
             onChangeText={setPassword}
           />
+          <Link href="/(auth)/forgot-password" asChild>
+            <Pressable accessibilityRole="link" style={{ alignSelf: 'flex-end', paddingVertical: 2, marginTop: -6 }}>
+              <Text style={{ color: c.accent, fontFamily: fonts.medium, fontSize: 14 }}>
+                {t('mobile.auth.forgotPassword')}
+              </Text>
+            </Pressable>
+          </Link>
           <FieldError message={error ?? undefined} />
           <PrimaryButton
             testID="sign-in-submit"
-            title={t('mobile.auth.continue')}
+            title={t('mobile.auth.signIn')}
             onPress={handleSubmit}
             disabled={!emailAddress || !password}
             loading={busy}
           />
-          <Text
-            onPress={() => {
-              setError(null);
-              setUsePhone(true);
-            }}
-            style={{ color: c.primary, fontFamily: 'Inter_500Medium', textAlign: 'center', padding: 8 }}
-          >
-            Use phone number instead
-          </Text>
-        </>
-      ) : (
-        <>
-          {!verificationId ? (
-            <>
-              <AuthInput
-                label="Phone number"
-                value={phone}
-                placeholder="+1 555 555 5555"
-                onChangeText={setPhone}
-                keyboardType="phone-pad"
-              />
-              <FieldError message={error ?? undefined} />
-              <PrimaryButton title="Send code" onPress={handleSendOtp} disabled={!phone} loading={busy} />
-            </>
-          ) : (
-            <>
-              <AuthInput
-                label={t('mobile.auth.verificationCode')}
-                value={code}
-                placeholder={t('mobile.auth.verificationCodePlaceholder')}
-                onChangeText={setCode}
-                keyboardType="numeric"
-              />
-              <FieldError message={error ?? undefined} />
-              <PrimaryButton title={t('mobile.auth.verify')} onPress={handleVerifyOtp} disabled={!code} loading={busy} />
-            </>
-          )}
-          <Text
-            onPress={() => {
-              setError(null);
-              setUsePhone(false);
-              setVerificationId(null);
-            }}
-            style={{ color: c.primary, fontFamily: 'Inter_500Medium', textAlign: 'center', padding: 8 }}
-          >
-            Use email instead
-          </Text>
+          <OrDivider />
+          <View style={{ gap: 10 }}>
+            <GoogleButton onError={setError} />
+            <AltAuthButton
+              testID="use-phone"
+              label={t('mobile.auth.continueWithPhone')}
+              onPress={() => {
+                setError(null);
+                setUsePhone(true);
+              }}
+              leading={<Feather name="smartphone" size={20} color={c.foreground} />}
+            />
+          </View>
+          <View style={{ flexGrow: 1 }} />
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <Text style={{ color: c.mutedForeground, fontFamily: fonts.regular, fontSize: 14 }}>
+              {t('mobile.auth.noAccount')}
+            </Text>
+            <Link href="/(auth)/sign-up">
+              <Text style={{ color: c.accent, fontFamily: fonts.semibold, fontSize: 14 }}>{t('mobile.auth.signUp')}</Text>
+            </Link>
+          </View>
         </>
       )}
-
-      <RecaptchaModal
-        ref={recaptchaRef}
-        apiKey={firebaseConfig.apiKey ?? ''}
-        authDomain={firebaseConfig.authDomain ?? ''}
-        projectId={firebaseConfig.projectId ?? ''}
-        appId={firebaseConfig.appId ?? ''}
-      />
-
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
-        <Text style={{ color: c.mutedForeground, fontFamily: 'Inter_400Regular' }}>
-          {t('mobile.auth.noAccount')}
-        </Text>
-        <Link href="/(auth)/sign-up">
-          <Text style={{ color: c.primary, fontFamily: 'Inter_600SemiBold' }}>{t('mobile.auth.signUp')}</Text>
-        </Link>
-      </View>
     </KeyboardAwareScrollViewCompat>
   );
 }

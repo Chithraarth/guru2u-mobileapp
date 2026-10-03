@@ -9,7 +9,7 @@ import {
   type Reading,
 } from '@workspace/api-client-react';
 import { PhotoPicker, type PickedImage } from '@/components/PhotoPicker';
-import { ReadingResult } from '@/components/ReadingResult';
+import { ReadingResult, ResultActions } from '@/components/ReadingResult';
 import { MysticLoading, PrimaryButton } from '@/components/ui';
 import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { useColors } from '@/hooks/useColors';
@@ -44,9 +44,10 @@ export default function FaceReadingScreen() {
       {reading ? (
         <>
           <ReadingResult reading={reading} />
-          <PrimaryButton
-            title={t('mobile.face.newReading')}
-            onPress={() => {
+          <ResultActions
+            reading={reading}
+            newLabel={t('mobile.face.newReading')}
+            onNew={() => {
               setReading(null);
               setImage(null);
             }}
@@ -68,6 +69,7 @@ export default function FaceReadingScreen() {
           <PrimaryButton
             testID="face-submit"
             title={t('mobile.face.reveal')}
+            icon="star"
             onPress={submit}
             disabled={!image}
           />

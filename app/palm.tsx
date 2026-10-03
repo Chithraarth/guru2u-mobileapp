@@ -9,7 +9,7 @@ import {
   type Reading,
 } from '@workspace/api-client-react';
 import { PhotoPicker, type PickedImage } from '@/components/PhotoPicker';
-import { ReadingResult } from '@/components/ReadingResult';
+import { ReadingResult, ResultActions } from '@/components/ReadingResult';
 import { MysticLoading, PrimaryButton } from '@/components/ui';
 import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { useColors } from '@/hooks/useColors';
@@ -44,9 +44,10 @@ export default function PalmReadingScreen() {
       {reading ? (
         <>
           <ReadingResult reading={reading} />
-          <PrimaryButton
-            title={t('mobile.palm.newReading')}
-            onPress={() => {
+          <ResultActions
+            reading={reading}
+            newLabel={t('mobile.palm.newReading')}
+            onNew={() => {
               setReading(null);
               setImage(null);
             }}
@@ -58,6 +59,7 @@ export default function PalmReadingScreen() {
         <>
           <PhotoPicker
             label={t('mobile.palm.pickerLabel')}
+            guide="palm"
             image={image}
             onPicked={setImage}
             onClear={() => setImage(null)}
@@ -68,6 +70,7 @@ export default function PalmReadingScreen() {
           <PrimaryButton
             testID="palm-submit"
             title={t('mobile.palm.reveal')}
+            icon="star"
             onPress={submit}
             disabled={!image}
           />

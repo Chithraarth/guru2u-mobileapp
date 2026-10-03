@@ -13,11 +13,11 @@ import {
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
 import { PhotoPicker, type PickedImage } from '@/components/PhotoPicker';
 import { Recorder } from '@/components/Recorder';
-import { ReadingResult } from '@/components/ReadingResult';
+import { ReadingResult, ResultActions } from '@/components/ReadingResult';
 import { Card, Chip, ErrorBox, MysticLoading, PrimaryButton, SectionLabel } from '@/components/ui';
 import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { useColors } from '@/hooks/useColors';
-import colors from '@/constants/colors';
+import fonts from '@/constants/fonts';
 
 const CONTEXTS: { value: ComboReadingInputContext; labelKey: string }[] = [
   { value: 'interview', labelKey: 'mobile.insight.ctxInterview' },
@@ -103,15 +103,20 @@ export default function InsightReadingScreen() {
       {reading ? (
         <>
           <ReadingResult reading={reading} />
-          <PrimaryButton title={t('mobile.insight.newReading')} onPress={reset} />
+          <ResultActions reading={reading} newLabel={t('mobile.insight.newReading')} onNew={reset} />
         </>
       ) : create.isPending ? (
         <MysticLoading label={t('mobile.insight.loading')} />
       ) : (
         <>
-          <Text style={{ color: c.mutedForeground, fontFamily: 'Inter_400Regular', fontSize: 14, lineHeight: 20 }}>
-            {t('mobile.insight.intro')}
-          </Text>
+          <View style={[styles.hero, { backgroundColor: c.primaryFill }]}>
+            <View style={styles.heroIcon}>
+              <Feather name="eye" size={22} color={c.primaryForeground} />
+            </View>
+            <Text style={{ flex: 1, color: c.primaryForeground, fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 }}>
+              {t('mobile.insight.intro')}
+            </Text>
+          </View>
 
           <View>
             <SectionLabel>{t('mobile.insight.situation')}</SectionLabel>
@@ -132,6 +137,7 @@ export default function InsightReadingScreen() {
             <SectionLabel>{t('mobile.insight.face')}</SectionLabel>
             <PhotoPicker
               label={t('mobile.insight.facePickerLabel')}
+              compact
               image={image}
               onPicked={setImage}
               onClear={() => setImage(null)}
@@ -146,7 +152,7 @@ export default function InsightReadingScreen() {
                   testID="insight-month"
                   style={[...inputStyle, { flex: 1 }]}
                   placeholder="MM"
-                  placeholderTextColor={c.mutedForeground}
+                  placeholderTextColor={c.subtle}
                   keyboardType="number-pad"
                   maxLength={2}
                   value={month}
@@ -156,7 +162,7 @@ export default function InsightReadingScreen() {
                   testID="insight-day"
                   style={[...inputStyle, { flex: 1 }]}
                   placeholder="DD"
-                  placeholderTextColor={c.mutedForeground}
+                  placeholderTextColor={c.subtle}
                   keyboardType="number-pad"
                   maxLength={2}
                   value={day}
@@ -166,7 +172,7 @@ export default function InsightReadingScreen() {
                   testID="insight-year"
                   style={[...inputStyle, { flex: 1.4 }]}
                   placeholder="YYYY"
-                  placeholderTextColor={c.mutedForeground}
+                  placeholderTextColor={c.subtle}
                   keyboardType="number-pad"
                   maxLength={4}
                   value={year}
@@ -177,7 +183,7 @@ export default function InsightReadingScreen() {
                 testID="insight-place"
                 style={inputStyle}
                 placeholder={t('mobile.insight.placePlaceholder')}
-                placeholderTextColor={c.mutedForeground}
+                placeholderTextColor={c.subtle}
                 value={place}
                 onChangeText={setPlace}
               />
@@ -189,7 +195,7 @@ export default function InsightReadingScreen() {
             {audioBase64 ? (
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                 <Feather name="check-circle" size={18} color={c.primary} />
-                <Text style={{ color: c.foreground, fontFamily: 'Inter_500Medium', flex: 1 }}>
+                <Text style={{ color: c.foreground, fontFamily: 'DMSans_500Medium', flex: 1 }}>
                   {t('mobile.insight.recordingCaptured')}
                 </Text>
                 <Chip label={t('mobile.insight.redo')} onPress={() => setAudioBase64(null)} />
@@ -206,7 +212,7 @@ export default function InsightReadingScreen() {
           {create.isError ? (
             <ReadingCreateError error={create.error} fallbackMessage={t('mobile.insight.error')} />
           ) : null}
-          <PrimaryButton testID="insight-submit" title={t('mobile.insight.submit')} onPress={submit} />
+          <PrimaryButton testID="insight-submit" variant="gold" icon="eye" title={t('mobile.insight.submit')} onPress={submit} />
         </>
       )}
     </KeyboardAwareScrollViewCompat>
@@ -214,12 +220,28 @@ export default function InsightReadingScreen() {
 }
 
 const styles = StyleSheet.create({
+  hero: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    borderRadius: 22,
+    padding: 16,
+  },
+  heroIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255,255,255,0.16)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   input: {
+    minWidth: 0,
+    minHeight: 50,
     borderWidth: 1,
-    borderRadius: colors.radius,
+    borderRadius: 14,
     paddingHorizontal: 14,
-    paddingVertical: 12,
     fontSize: 16,
-    fontFamily: 'Inter_400Regular',
+    fontFamily: 'DMSans_400Regular',
   },
 });

@@ -1,12 +1,13 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ApiError } from '@workspace/api-client-react';
-import { ErrorBox } from '@/components/ui';
+import { ErrorBox, PrimaryButton } from '@/components/ui';
 import { useColors } from '@/hooks/useColors';
 import colors from '@/constants/colors';
+import fonts from '@/constants/fonts';
 
 /**
  * Renders the error state for a create-reading mutation.
@@ -34,56 +35,39 @@ export function ReadingCreateError({
       <View
         style={{
           borderWidth: 1,
-          borderColor: c.primary,
-          borderRadius: colors.radius,
-          backgroundColor: c.primary + '14',
-          padding: 16,
-          gap: 10,
+          borderColor: c.accent,
+          borderRadius: colors.radiusLg,
+          backgroundColor: c.card,
+          padding: 18,
+          gap: 12,
         }}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <Feather name="zap" size={16} color={c.primary} />
-          <Text
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          <View
             style={{
-              color: c.foreground,
-              fontFamily: 'Inter_600SemiBold',
-              fontSize: 15,
+              width: 36,
+              height: 36,
+              borderRadius: 12,
+              backgroundColor: c.secondary,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
+            <MaterialCommunityIcons name="crown-outline" size={20} color={c.accent} />
+          </View>
+          <Text style={{ flex: 1, color: c.foreground, fontFamily: fonts.semibold, fontSize: 16 }}>
             {t('mobile.readingCreateError.limitReachedTitle')}
           </Text>
         </View>
-        <Text
-          style={{
-            color: c.mutedForeground,
-            fontFamily: 'Inter_400Regular',
-            fontSize: 13,
-            lineHeight: 19,
-          }}
-        >
+        <Text style={{ color: c.mutedForeground, fontFamily: fonts.regular, fontSize: 14, lineHeight: 20 }}>
           {message}
         </Text>
-        <Pressable
+        <PrimaryButton
           testID="upgrade-button"
+          variant="gold"
+          title={t('mobile.readingCreateError.seePlans')}
           onPress={() => router.push('/paywall')}
-          style={({ pressed }) => ({
-            backgroundColor: c.primary,
-            borderRadius: colors.radius,
-            paddingVertical: 12,
-            alignItems: 'center',
-            opacity: pressed ? 0.85 : 1,
-          })}
-        >
-          <Text
-            style={{
-              color: c.primaryForeground,
-              fontFamily: 'Inter_600SemiBold',
-              fontSize: 14,
-            }}
-          >
-            {t('mobile.readingCreateError.seePlans')}
-          </Text>
-        </Pressable>
+        />
       </View>
     );
   }

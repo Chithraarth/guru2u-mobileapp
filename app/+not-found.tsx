@@ -1,25 +1,26 @@
-import { Link, Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useColors } from '@/hooks/useColors';
+import { OrbitRings, StarMark } from '@/components/nebula';
+import { PrimaryButton } from '@/components/ui';
+import fonts from '@/constants/fonts';
 
 export default function NotFoundScreen() {
-  const colors = useColors();
+  const c = useColors();
   const { t } = useTranslation();
+  const router = useRouter();
 
   return (
     <>
       <Stack.Screen options={{ title: t('mobile.notFound.screenTitle') }} />
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Text style={[styles.title, { color: colors.foreground }]}>
-          {t('mobile.notFound.title')}
-        </Text>
-
-        <Link href="/" style={styles.link}>
-          <Text style={[styles.linkText, { color: colors.primary }]}>
-            {t('mobile.notFound.goHome')}
-          </Text>
-        </Link>
+      <View style={[styles.container, { backgroundColor: c.background }]}>
+        <View style={{ width: 220, height: 220, alignItems: 'center', justifyContent: 'center' }}>
+          <OrbitRings size={220} />
+          <StarMark size={88} halo />
+        </View>
+        <Text style={[styles.title, { color: c.foreground }]}>{t('mobile.notFound.title')}</Text>
+        <PrimaryButton title={t('mobile.notFound.goHome')} onPress={() => router.replace('/')} style={{ alignSelf: 'stretch' }} />
       </View>
     </>
   );
@@ -30,17 +31,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 24,
+    gap: 24,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-  linkText: {
-    fontSize: 14,
+    fontFamily: fonts.display,
+    fontSize: 26,
+    textAlign: 'center',
   },
 });
