@@ -13,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '@/constants/colors';
+import fonts from '@/constants/fonts';
 
 const PARTICLE_COUNT = 24;
 const PARTICLE_COLORS = [colors.dark.accent, colors.dark.primary];
@@ -165,8 +166,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   logotype: {
-    color: colors.dark.primary,
-    fontFamily: 'Inter_700Bold',
+    color: colors.dark.foreground,
+    fontFamily: fonts.display,
     fontSize: 32,
     letterSpacing: -0.5,
   },
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 40,
     color: colors.dark.mutedForeground,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: fonts.semibold,
     fontSize: 12,
     letterSpacing: 2,
     textTransform: 'uppercase',

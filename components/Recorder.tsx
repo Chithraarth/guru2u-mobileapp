@@ -14,6 +14,7 @@ import * as FileSystem from 'expo-file-system/legacy';
 import * as Haptics from 'expo-haptics';
 import { Feather } from '@expo/vector-icons';
 import { useColors } from '@/hooks/useColors';
+import fonts from '@/constants/fonts';
 import colors from '@/constants/colors';
 
 const MAX_MS = 30 * 60 * 1000; // 30 minutes
@@ -129,7 +130,7 @@ export function Recorder({
           <Text
             style={{
               color: c.mutedForeground,
-              fontFamily: 'Inter_400Regular',
+              fontFamily: fonts.regular,
               fontSize: 14,
               textAlign: 'center',
             }}
@@ -143,14 +144,15 @@ export function Recorder({
             style={({ pressed }) => [
               styles.bigBtn,
               {
-                backgroundColor: c.primary,
+                backgroundColor: c.primaryFill,
+                borderColor: c.accent,
                 opacity: disabled || phase === 'processing' ? 0.5 : pressed ? 0.85 : 1,
               },
             ]}
           >
-            <Feather name="mic" size={28} color={c.primaryForeground} />
+            <Feather name="mic" size={30} color={c.primaryForeground} />
           </Pressable>
-          <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: 'Inter_400Regular' }}>
+          <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: fonts.regular }}>
             {t('mobile.recorder.tapToRecord')}
           </Text>
         </>
@@ -159,14 +161,14 @@ export function Recorder({
           <Text
             style={{
               color: c.foreground,
-              fontFamily: 'Inter_700Bold',
-              fontSize: 34,
+              fontFamily: fonts.display,
+              fontSize: 48,
               fontVariant: ['tabular-nums'],
             }}
           >
             {fmt(state.durationMillis)}
           </Text>
-          <Text style={{ color: phase === 'paused' ? c.accent : c.destructive, fontFamily: 'Inter_500Medium', fontSize: 13 }}>
+          <Text style={{ color: phase === 'paused' ? c.accent : c.destructive, fontFamily: fonts.medium, fontSize: 13 }}>
             {phase === 'paused' ? t('mobile.recorder.paused') : t('mobile.recorder.recording')}
           </Text>
           <View style={{ flexDirection: 'row', gap: 16 }}>
@@ -175,7 +177,7 @@ export function Recorder({
               onPress={phase === 'paused' ? resume : pause}
               style={({ pressed }) => [
                 styles.midBtn,
-                { backgroundColor: c.secondary, opacity: pressed ? 0.85 : 1 },
+                { backgroundColor: c.card, borderWidth: 1, borderColor: c.border, opacity: pressed ? 0.85 : 1 },
               ]}
             >
               <Feather
@@ -189,13 +191,13 @@ export function Recorder({
               onPress={stop}
               style={({ pressed }) => [
                 styles.midBtn,
-                { backgroundColor: c.destructive, opacity: pressed ? 0.85 : 1 },
+                { backgroundColor: c.foreground, opacity: pressed ? 0.85 : 1 },
               ]}
             >
-              <Feather name="square" size={22} color={c.destructiveForeground} />
+              <Feather name="square" size={22} color={c.background} />
             </Pressable>
           </View>
-          <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: 'Inter_400Regular' }}>
+          <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: fonts.regular }}>
             {t('mobile.recorder.tapToFinish')}
           </Text>
         </>
@@ -206,9 +208,10 @@ export function Recorder({
 
 const styles = StyleSheet.create({
   bigBtn: {
-    width: 76,
-    height: 76,
-    borderRadius: 38,
+    width: 84,
+    height: 84,
+    borderRadius: 42,
+    borderWidth: 4,
     alignItems: 'center',
     justifyContent: 'center',
   },

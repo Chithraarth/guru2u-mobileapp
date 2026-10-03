@@ -1,9 +1,11 @@
 import 'react-native-get-random-values';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 import { initializeApp } from 'firebase/app';
 // @ts-expect-error - getReactNativePersistence exists at runtime but is not in the public TS types yet
 import { getReactNativePersistence } from 'firebase/auth';
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
   initializeAuth,
   onAuthStateChanged,
@@ -11,6 +13,7 @@ import {
   signInWithCredential,
   PhoneAuthProvider,
   GoogleAuthProvider,
+  sendPasswordResetEmail,
   signOut,
   type User,
 } from 'firebase/auth';
@@ -24,8 +27,9 @@ export const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+// getReactNativePersistence only exists in Firebase's React Native build.
 export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
+  persistence: Platform.OS === 'web' ? browserLocalPersistence : getReactNativePersistence(AsyncStorage),
 });
 
 export function signInWithEmail(email: string, password: string) {
@@ -34,6 +38,10 @@ export function signInWithEmail(email: string, password: string) {
 
 export function signUpWithEmail(email: string, password: string) {
   return createUserWithEmailAndPassword(auth, email, password);
+}
+
+export function sendPasswordReset(email: string) {
+  return sendPasswordResetEmail(auth, email);
 }
 
 export function signOutUser() {

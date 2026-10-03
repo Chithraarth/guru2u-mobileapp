@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
+import { Feather } from '@expo/vector-icons';
 import {
   useCreateAstroReading,
   getListReadingsQueryKey,
@@ -9,11 +10,11 @@ import {
   type Reading,
 } from '@workspace/api-client-react';
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
-import { ReadingResult } from '@/components/ReadingResult';
-import { Chip, ErrorBox, MysticLoading, PrimaryButton, SectionLabel } from '@/components/ui';
+import { ReadingResult, ResultActions } from '@/components/ReadingResult';
+import { Card, ErrorBox, MysticLoading, PrimaryButton, Segmented, SectionLabel } from '@/components/ui';
 import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { useColors } from '@/hooks/useColors';
-import colors from '@/constants/colors';
+import fonts from '@/constants/fonts';
 
 export default function AstroReadingScreen() {
   const c = useColors();
@@ -30,10 +31,7 @@ export default function AstroReadingScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const create = useCreateAstroReading();
 
-  const inputStyle = [
-    styles.input,
-    { backgroundColor: c.card, borderColor: c.border, color: c.foreground },
-  ];
+  const inputStyle = [styles.input, { backgroundColor: c.background, borderColor: c.border, color: c.foreground }];
 
   const submit = () => {
     setFormError(null);
@@ -76,101 +74,126 @@ export default function AstroReadingScreen() {
   return (
     <KeyboardAwareScrollViewCompat
       style={{ flex: 1, backgroundColor: c.background }}
-      contentContainerStyle={{ padding: 20, paddingBottom: 60, gap: 18 }}
+      contentContainerStyle={{ padding: 20, paddingBottom: 60, gap: 16 }}
       bottomOffset={40}
       keyboardShouldPersistTaps="handled"
     >
       {reading ? (
         <>
           <ReadingResult reading={reading} />
-          <PrimaryButton title={t('mobile.astro.newReading')} onPress={() => setReading(null)} />
+          <ResultActions reading={reading} newLabel={t('mobile.astro.newReading')} onNew={() => setReading(null)} />
         </>
       ) : create.isPending ? (
         <MysticLoading label={t('mobile.astro.loading')} />
       ) : (
         <>
-          <View>
+          <View style={{ alignItems: 'center', gap: 10, paddingVertical: 8 }}>
+            <View style={[styles.moon, { backgroundColor: c.card, borderColor: c.border }]}>
+              <View style={[styles.moonRing, { borderColor: c.borderStrong }]} />
+              <Feather name="moon" size={34} color={c.accent} />
+            </View>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, color: c.mutedForeground, textAlign: 'center' }}>
+              {t('home.modeAstroDesc')}
+            </Text>
+          </View>
+
+          <Card>
             <SectionLabel>{t('mobile.astro.birthDate')}</SectionLabel>
             <View style={{ flexDirection: 'row', gap: 10 }}>
               <TextInput
                 testID="astro-month"
                 style={[...inputStyle, { flex: 1 }]}
                 placeholder="MM"
-                placeholderTextColor={c.mutedForeground}
+                placeholderTextColor={c.subtle}
                 keyboardType="number-pad"
                 maxLength={2}
                 value={month}
                 onChangeText={setMonth}
+                accessibilityLabel="Month"
               />
               <TextInput
                 testID="astro-day"
                 style={[...inputStyle, { flex: 1 }]}
                 placeholder="DD"
-                placeholderTextColor={c.mutedForeground}
+                placeholderTextColor={c.subtle}
                 keyboardType="number-pad"
                 maxLength={2}
                 value={day}
                 onChangeText={setDay}
+                accessibilityLabel="Day"
               />
               <TextInput
                 testID="astro-year"
                 style={[...inputStyle, { flex: 1.4 }]}
                 placeholder="YYYY"
-                placeholderTextColor={c.mutedForeground}
+                placeholderTextColor={c.subtle}
                 keyboardType="number-pad"
                 maxLength={4}
                 value={year}
                 onChangeText={setYear}
+                accessibilityLabel="Year"
               />
             </View>
-          </View>
+          </Card>
 
-          <View>
+          <Card>
             <SectionLabel>{t('mobile.astro.birthTime')}</SectionLabel>
             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
               <TextInput
                 testID="astro-hour"
                 style={[...inputStyle, { flex: 1 }]}
                 placeholder="HH"
-                placeholderTextColor={c.mutedForeground}
+                placeholderTextColor={c.subtle}
                 keyboardType="number-pad"
                 maxLength={2}
                 value={hour}
                 onChangeText={setHour}
+                accessibilityLabel="Hour"
               />
-              <Text style={{ color: c.mutedForeground, fontSize: 18 }}>:</Text>
+              <Text style={{ color: c.mutedForeground, fontSize: 18, fontFamily: fonts.semibold }}>:</Text>
               <TextInput
                 testID="astro-minute"
                 style={[...inputStyle, { flex: 1 }]}
                 placeholder="MM"
-                placeholderTextColor={c.mutedForeground}
+                placeholderTextColor={c.subtle}
                 keyboardType="number-pad"
                 maxLength={2}
                 value={minute}
                 onChangeText={setMinute}
+                accessibilityLabel="Minute"
               />
-              <Chip label="AM" selected={ampm === 'AM'} onPress={() => setAmpm('AM')} />
-              <Chip label="PM" selected={ampm === 'PM'} onPress={() => setAmpm('PM')} />
+              <Segmented
+                value={ampm}
+                onChange={setAmpm}
+                options={[
+                  { value: 'AM', label: 'AM' },
+                  { value: 'PM', label: 'PM' },
+                ]}
+              />
             </View>
-          </View>
+          </Card>
 
-          <View>
+          <Card>
             <SectionLabel>{t('mobile.astro.birthPlace')}</SectionLabel>
-            <TextInput
-              testID="astro-place"
-              style={inputStyle}
-              placeholder={t('mobile.astro.placePlaceholder')}
-              placeholderTextColor={c.mutedForeground}
-              value={place}
-              onChangeText={setPlace}
-            />
-          </View>
+            <View style={[styles.placeRow, { backgroundColor: c.background, borderColor: c.border }]}>
+              <Feather name="map-pin" size={18} color={c.mutedForeground} />
+              <TextInput
+                testID="astro-place"
+                style={{ flex: 1, minWidth: 0, color: c.foreground, fontFamily: fonts.regular, fontSize: 16 }}
+                placeholder={t('mobile.astro.placePlaceholder')}
+                placeholderTextColor={c.subtle}
+                value={place}
+                onChangeText={setPlace}
+                accessibilityLabel={t('mobile.astro.birthPlace')}
+              />
+            </View>
+          </Card>
 
           {formError ? <ErrorBox message={formError} /> : null}
           {create.isError ? (
             <ReadingCreateError error={create.error} fallbackMessage={t('mobile.astro.error')} />
           ) : null}
-          <PrimaryButton testID="astro-submit" title={t('mobile.astro.submit')} onPress={submit} />
+          <PrimaryButton testID="astro-submit" title={t('mobile.astro.submit')} icon="star" onPress={submit} />
         </>
       )}
     </KeyboardAwareScrollViewCompat>
@@ -179,11 +202,38 @@ export default function AstroReadingScreen() {
 
 const styles = StyleSheet.create({
   input: {
+    minWidth: 0,
+    minHeight: 50,
     borderWidth: 1,
-    borderRadius: colors.radius,
+    borderRadius: 14,
     paddingHorizontal: 14,
-    paddingVertical: 12,
     fontSize: 16,
-    fontFamily: 'Inter_400Regular',
+    fontFamily: fonts.regular,
+    textAlign: 'center',
+  },
+  placeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    minHeight: 50,
+    borderWidth: 1,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+  },
+  moon: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  moonRing: {
+    position: 'absolute',
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    borderWidth: 1,
+    borderStyle: 'dashed',
   },
 });
