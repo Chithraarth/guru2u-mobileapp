@@ -15,7 +15,12 @@
         "NSPhotoLibraryUsageDescription": "Choose a photo of a face or palm to get a reading.",
         "NSMicrophoneUsageDescription": "Record your voice or a conversation to get a reading."
       },
-      "backgroundColor": "#0E0812"
+      "backgroundColor": "#0E0812",
+      "bundleIdentifier": "com.guru2u.app",
+      "buildNumber": "2",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "permissions": [
@@ -36,6 +41,7 @@
     },
     "plugins": [
       "expo-router",
+      "./plugins/with-ios-27.js",
       "expo-font",
       "expo-web-browser",
       [
@@ -52,7 +58,12 @@
       "expo-localization",
       "expo-audio",
       "expo-asset",
-      "@react-native-google-signin/google-signin"
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.291497895574-42b52v9lmfv7venfhpmrec00qtjkfm56"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

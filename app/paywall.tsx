@@ -65,6 +65,7 @@ export default function PaywallScreen() {
     try {
       await requestPurchase({
         request: {
+          apple: { sku: READING_PACK_SKU },
           google: {
             skus: [READING_PACK_SKU],
             obfuscatedAccountId: user.uid,

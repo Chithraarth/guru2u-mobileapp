@@ -3,10 +3,12 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 import { signInWithGoogleTokens } from '@/lib/firebase';
 
 const realWebClientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
+// iOS has no google-services file, so the native SDK needs its OAuth client ID here.
+const iosClientId = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || undefined;
 export const isGoogleSignInConfigured = !!realWebClientId;
 
 if (realWebClientId) {
-  GoogleSignin.configure({ webClientId: realWebClientId });
+  GoogleSignin.configure({ webClientId: realWebClientId, iosClientId });
 }
 
 // Normalizes @react-native-google-signin's native status codes (which don't
