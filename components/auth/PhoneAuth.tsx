@@ -90,7 +90,7 @@ export function PhoneAuth({ onUseEmail }: { onUseEmail: () => void }) {
           <AuthInput
             label={t('mobile.auth.phoneLabel')}
             value={phone}
-            placeholder="+1 555 555 5555"
+            placeholder="+91 98765 43210"
             onChangeText={setPhone}
             keyboardType="phone-pad"
             textContentType="telephoneNumber"

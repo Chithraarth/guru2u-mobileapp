@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, isCancelledResponse, statusCodes } from '@react-native-google-signin/google-signin';
 import { signInWithGoogleTokens } from '@/lib/firebase';
 
 const realWebClientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
@@ -30,6 +30,9 @@ export function useGoogleSignIn(onError: (message: string) => void) {
     try {
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       const result = await GoogleSignin.signIn();
+      // Closing the Google sheet resolves with a cancelled response rather
+      // than throwing, so it isn't an error worth showing.
+      if (isCancelledResponse(result)) return;
       const idToken = result.data?.idToken;
       if (!idToken) throw new Error('Google sign-in did not return an ID token');
       // Firebase's GoogleAuthProvider.credential requires a non-empty
