@@ -43,13 +43,15 @@ export function AuthHeader({ title, subtitle }: { title: string; subtitle: strin
   );
 }
 
-export function AuthInput(props: React.ComponentProps<typeof TextInput> & { label: string }) {
+export function AuthInput(props: React.ComponentProps<typeof TextInput> & { label: string; hideLabel?: boolean }) {
   const c = useColors();
-  const { label, onFocus, onBlur, ...rest } = props;
+  const { label, hideLabel, onFocus, onBlur, ...rest } = props;
   const [focused, setFocused] = useState(false);
   return (
     <View style={{ gap: 6 }}>
-      <Text style={{ color: c.mutedForeground, fontFamily: fonts.medium, fontSize: 13 }}>{label}</Text>
+      {hideLabel ? null : (
+        <Text style={{ color: c.mutedForeground, fontFamily: fonts.medium, fontSize: 13 }}>{label}</Text>
+      )}
       <TextInput
         placeholderTextColor={c.subtle}
         accessibilityLabel={label}
