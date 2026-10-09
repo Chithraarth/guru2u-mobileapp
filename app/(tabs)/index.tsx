@@ -41,8 +41,8 @@ export default function HomeScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { user } = useAuth();
-  const statusQuery = useQuery({ queryKey: ['billing', 'status'], queryFn: getBillingStatus });
-  const remaining = statusQuery.data?.scansRemaining ?? null;
+  const { data: billingStatus } = useQuery({ queryKey: ['billing', 'status'], queryFn: getBillingStatus });
+  const remaining = billingStatus?.scansRemaining ?? null;
 
   const go = (route: string) => {
     Haptics.selectionAsync();

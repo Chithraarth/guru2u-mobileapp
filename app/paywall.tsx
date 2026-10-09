@@ -23,8 +23,8 @@ export default function PaywallScreen() {
   const [purchased, setPurchased] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const statusQuery = useQuery({ queryKey: ['billing', 'status'], queryFn: getBillingStatus });
-  const scansRemaining = statusQuery.data?.scansRemaining;
+  const { data: billingStatus } = useQuery({ queryKey: ['billing', 'status'], queryFn: getBillingStatus });
+  const scansRemaining = billingStatus?.scansRemaining;
 
   const { connected, products, fetchProducts, requestPurchase, finishTransaction } = useIAP({
     onPurchaseSuccess: async (purchase) => {
