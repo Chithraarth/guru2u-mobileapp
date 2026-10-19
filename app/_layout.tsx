@@ -44,10 +44,14 @@ function RootLayoutNav() {
     setAuthTokenGetter(() => getIdToken());
   }, []);
 
-  // Clear cached data when the signed-in user changes.
+  // Clear cached data when a signed-in user signs out or switches account.
+  // Only clear when there *was* a previous user: on launch the restored
+  // session goes null → user, and clearing then would cancel the queries the
+  // first screen just started (Home's balance stuck on "—" forever).
   useEffect(() => {
     const id = user?.uid ?? null;
-    if (prevUserIdRef.current !== undefined && prevUserIdRef.current !== id) {
+    const prev = prevUserIdRef.current;
+    if (prev && prev !== id) {
       queryClient.clear();
     }
     prevUserIdRef.current = id;
