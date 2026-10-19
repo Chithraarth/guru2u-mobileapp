@@ -533,6 +533,12 @@ const ru: TranslationSchema = {
       or: 'или',
     },
     photoPicker: {
+      featureEyeShape: "Форма глаз",
+      featureBrowArch: "Изгиб бровей",
+      featureSmileLines: "Линии улыбки",
+      featureHeartLine: "Линия сердца",
+      featureHeadLine: "Линия ума",
+      featureLifeLine: "Линия жизни",
       retake: "Выбрать другое фото",
       privacyNote: "Фото используются только для создания прочтения.",
       readError: 'Мы не смогли прочитать это фото. Пожалуйста, попробуйте другое.',

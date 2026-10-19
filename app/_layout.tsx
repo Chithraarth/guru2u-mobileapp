@@ -5,12 +5,12 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import {
-  DMSans_400Regular,
-  DMSans_500Medium,
-  DMSans_600SemiBold,
-  DMSans_700Bold,
-} from '@expo-google-fonts/dm-sans';
-import { Marcellus_400Regular } from '@expo-google-fonts/marcellus';
+  Figtree_400Regular,
+  Figtree_500Medium,
+  Figtree_600SemiBold,
+  Figtree_700Bold,
+  Figtree_800ExtraBold,
+} from '@expo-google-fonts/figtree';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -65,7 +65,7 @@ function RootLayoutNav() {
         headerBackTitle: t('mobile.common.back'),
         headerStyle: { backgroundColor: c.background },
         headerTintColor: c.foreground,
-        headerTitleStyle: { fontFamily: fonts.display, fontSize: 19 },
+        headerTitleStyle: { fontFamily: fonts.bold, fontSize: 17 },
         headerShadowVisible: false,
         contentStyle: { backgroundColor: c.background },
       }}
@@ -95,11 +95,11 @@ function RootLayoutNav() {
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
-    DMSans_400Regular,
-    DMSans_500Medium,
-    DMSans_600SemiBold,
-    DMSans_700Bold,
-    Marcellus_400Regular,
+    Figtree_400Regular,
+    Figtree_500Medium,
+    Figtree_600SemiBold,
+    Figtree_700Bold,
+    Figtree_800ExtraBold,
   });
   const [langLoaded, setLangLoaded] = React.useState(false);
   const [showIntro, setShowIntro] = React.useState(true);
@@ -128,7 +128,7 @@ export default function RootLayout() {
             <QueryClientProvider client={queryClient}>
               <GestureHandlerRootView>
                 <KeyboardProvider>
-                  <StatusBar style="light" />
+                  <StatusBar style="dark" />
                   <RootLayoutNav />
                 </KeyboardProvider>
               </GestureHandlerRootView>

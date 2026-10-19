@@ -531,6 +531,12 @@ const en = {
       or: 'or',
     },
     photoPicker: {
+      featureEyeShape: "Eye shape",
+      featureBrowArch: "Brow arch",
+      featureSmileLines: "Smile lines",
+      featureHeartLine: "Heart line",
+      featureHeadLine: "Head line",
+      featureLifeLine: "Life line",
       retake: 'Choose a different photo',
       privacyNote: 'Photos are only used to create your reading.',
       readError: "We couldn't read that photo. Please try another one.",

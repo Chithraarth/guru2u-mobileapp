@@ -533,6 +533,12 @@ const ja: TranslationSchema = {
       or: 'または',
     },
     photoPicker: {
+      featureEyeShape: "目の形",
+      featureBrowArch: "眉のアーチ",
+      featureSmileLines: "笑いじわ",
+      featureHeartLine: "感情線",
+      featureHeadLine: "頭脳線",
+      featureLifeLine: "生命線",
       retake: "別の写真を選ぶ",
       privacyNote: "写真は鑑定の作成にのみ使用されます。",
       readError: 'その写真を読み取れませんでした。別の写真をお試しください。',

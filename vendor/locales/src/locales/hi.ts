@@ -533,6 +533,12 @@ const hi: TranslationSchema = {
       or: 'या',
     },
     photoPicker: {
+      featureEyeShape: "आँखों का आकार",
+      featureBrowArch: "भौंह का आकार",
+      featureSmileLines: "मुस्कान रेखाएँ",
+      featureHeartLine: "हृदय रेखा",
+      featureHeadLine: "मस्तिष्क रेखा",
+      featureLifeLine: "जीवन रेखा",
       retake: "दूसरी फ़ोटो चुनें",
       privacyNote: "फ़ोटो का उपयोग केवल आपकी रीडिंग बनाने के लिए होता है।",
       readError: 'हम उस तस्वीर को नहीं पढ़ सके। कृपया कोई और आज़माएँ।',

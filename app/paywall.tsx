@@ -97,9 +97,9 @@ export default function PaywallScreen() {
         </View>
 
         {purchased ? (
-          <View style={[styles.notice, { backgroundColor: c.accent + '1A', borderColor: c.accent }]}>
-            <Feather name="check-circle" size={18} color={c.accent} />
-            <Text style={{ flex: 1, fontFamily: fonts.semibold, fontSize: 14, color: c.accentSoft }}>
+          <View style={[styles.notice, { backgroundColor: c.successSoft, borderColor: c.success }]}>
+            <Feather name="check-circle" size={18} color={c.success} />
+            <Text style={{ flex: 1, fontFamily: fonts.semibold, fontSize: 14, color: c.success }}>
               {t('mobile.paywall.purchaseSuccess')}
             </Text>
           </View>

@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "persona-mobile",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": false,
@@ -15,9 +15,9 @@
         "NSPhotoLibraryUsageDescription": "Choose a photo of a face or palm to get a reading.",
         "NSMicrophoneUsageDescription": "Record your voice or a conversation to get a reading."
       },
-      "backgroundColor": "#0E0812",
+      "backgroundColor": "#FFF6F8",
       "bundleIdentifier": "com.guru2u.app",
-      "buildNumber": "5",
+      "buildNumber": "6",
       "config": {
         "usesNonExemptEncryption": false
       }
@@ -28,13 +28,13 @@
         "android.permission.CAMERA"
       ],
       "package": "com.anonymous.personamobile",
-      "versionCode": 6,
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "monochromeImage": "./assets/images/adaptive-icon-monochrome.png",
         "backgroundColor": "#24104A"
       },
-      "backgroundColor": "#0E0812"
+      "backgroundColor": "#FFF6F8"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -50,7 +50,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 160,
           "resizeMode": "contain",
-          "backgroundColor": "#0E0812"
+          "backgroundColor": "#FFF6F8"
         }
       ],
       "./plugins/withWindowsNinjaFix.js",
@@ -69,6 +69,6 @@
       "typedRoutes": true,
       "reactCompiler": true
     },
-    "backgroundColor": "#0E0812"
+    "backgroundColor": "#FFF6F8"
   }
 }

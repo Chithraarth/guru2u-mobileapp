@@ -12,6 +12,7 @@ import { signOutUser } from '@/lib/firebase';
 import { getBillingStatus } from '@/lib/billing';
 import { LANGUAGES, setAppLanguage } from '@/lib/i18n';
 import { contactOf, displayNameOf } from '@/lib/user';
+import { UserRound } from 'lucide-react-native';
 import { TAB_BAR_SPACE } from '@/components/NebulaTabBar';
 import { PrimaryButton } from '@/components/ui';
 import { useColors } from '@/hooks/useColors';
@@ -32,7 +33,8 @@ export default function ProfileScreen() {
 
   const name = displayNameOf(user);
   const contact = contactOf(user);
-  const initial = (name || contact || '?').charAt(0).toUpperCase();
+  // Phone sign-ins have no name: show an icon and the number as the title.
+  const initial = name ? name.charAt(0).toUpperCase() : null;
   const currentLang = i18n.language?.split('-')[0] ?? 'en';
   const languageName = LANGUAGES.find((l) => l.code === currentLang)?.nativeName ?? 'English';
 
@@ -83,13 +85,17 @@ export default function ProfileScreen() {
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
         <View style={[styles.avatar, { backgroundColor: c.primaryFill }]}>
-          <Text style={{ fontFamily: fonts.semibold, fontSize: 24, color: c.primaryForeground }}>{initial}</Text>
+          {initial ? (
+            <Text style={{ fontFamily: fonts.bold, fontSize: 24, color: c.primaryForeground }}>{initial}</Text>
+          ) : (
+            <UserRound size={28} color={c.primaryForeground} />
+          )}
         </View>
         <View style={{ flex: 1, gap: 2 }}>
-          <Text style={{ fontFamily: fonts.display, fontSize: 24, color: c.foreground }} numberOfLines={1}>
-            {name || t('mobile.paywall.signedIn')}
+          <Text style={{ fontFamily: fonts.display, fontSize: 24, letterSpacing: -0.4, color: c.foreground }} numberOfLines={1}>
+            {name || contact || t('mobile.paywall.signedIn')}
           </Text>
-          {contact ? (
+          {name && contact ? (
             <Text style={{ fontFamily: fonts.regular, fontSize: 13, color: c.mutedForeground }} numberOfLines={1}>
               {contact}
             </Text>

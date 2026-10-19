@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { Hand, ImageIcon, Sparkle, Sun } from 'lucide-react-native';
+import { FaceMesh, ScanBeam } from '@/components/nebula';
 import { useColors } from '@/hooks/useColors';
 import colors from '@/constants/colors';
 import fonts from '@/constants/fonts';
@@ -14,8 +16,9 @@ export interface PickedImage {
 }
 
 /**
- * Nebula capture frame: a framing guide (face oval or hand outline),
- * a gold shutter that opens the camera and a library shortcut.
+ * Capture frame: a scan guide on a plum stage (face landmark mesh or palm
+ * outline with a sweeping beam and feature tags), a shutter that opens the
+ * camera and a library shortcut.
  */
 export function PhotoPicker({
   label,
@@ -35,7 +38,7 @@ export function PhotoPicker({
   const c = useColors();
   const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
-  const frameHeight = compact ? 220 : 320;
+  const frameHeight = compact ? 260 : 380;
 
   const handleResult = (result: ImagePicker.ImagePickerResult) => {
     if (result.canceled) return;
@@ -107,25 +110,42 @@ export function PhotoPicker({
     );
   }
 
+  const features =
+    guide === 'face'
+      ? ['mobile.photoPicker.featureEyeShape', 'mobile.photoPicker.featureBrowArch', 'mobile.photoPicker.featureSmileLines']
+      : ['mobile.photoPicker.featureHeartLine', 'mobile.photoPicker.featureHeadLine', 'mobile.photoPicker.featureLifeLine'];
+  const guideArea = frameHeight - 76;
+
   return (
     <View style={{ gap: 18 }}>
-      <View style={[styles.frame, { height: frameHeight, backgroundColor: '#15101C', borderColor: c.border }]}>
-        {guide === 'face' ? (
-          <View
-            style={{
-              width: frameHeight * 0.58,
-              height: frameHeight * 0.78,
-              borderRadius: frameHeight,
-              borderWidth: 2,
-              borderStyle: 'dashed',
-              borderColor: c.accent,
-            }}
-          />
-        ) : (
-          <MaterialCommunityIcons name="hand-back-left-outline" size={frameHeight * 0.6} color={c.accent} style={{ opacity: 0.8 }} />
-        )}
-        <View style={[styles.hint, { backgroundColor: 'rgba(14,8,18,0.8)' }]}>
-          <Text style={{ color: c.foreground, fontFamily: fonts.regular, fontSize: 13, textAlign: 'center' }}>{label}</Text>
+      <View style={[styles.frame, { height: frameHeight, backgroundColor: c.stage, borderColor: c.stage }]}>
+        <View style={[styles.softFrame, { borderColor: c.stageLine }]}>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            {guide === 'face' ? (
+              <FaceMesh width={guideArea * 0.62} />
+            ) : (
+              <Hand size={guideArea * 0.62} color="#FFB3C6" strokeWidth={1.2} />
+            )}
+          </View>
+          <ScanBeam height={guideArea} />
+          <View style={[styles.tag, { top: '20%', left: 8 }]}>
+            <Sparkle size={12} color={c.accent} />
+            <Text style={[styles.tagText, { color: c.primary }]}>{t(features[0])}</Text>
+          </View>
+          <View style={[styles.tag, { top: '8%', right: 8 }]}>
+            <Sparkle size={12} color={c.accent} />
+            <Text style={[styles.tagText, { color: c.primary }]}>{t(features[1])}</Text>
+          </View>
+          <View style={[styles.tag, { top: '62%', right: 12 }]}>
+            <Sparkle size={12} color={c.accent} />
+            <Text style={[styles.tagText, { color: c.primary }]}>{t(features[2])}</Text>
+          </View>
+        </View>
+        <View style={styles.hint}>
+          <Sun size={15} color="#FFB3C6" />
+          <Text style={{ flex: 1, color: '#FFFFFF', fontFamily: fonts.semibold, fontSize: 13 }} numberOfLines={2}>
+            {label}
+          </Text>
         </View>
       </View>
 
@@ -141,7 +161,7 @@ export function PhotoPicker({
             { backgroundColor: c.card, borderColor: c.border, opacity: busy ? 0.5 : pressed ? 0.8 : 1 },
           ]}
         >
-          <Feather name="image" size={22} color={c.foreground} />
+          <ImageIcon size={22} color={c.primary} />
         </Pressable>
         <Pressable
           testID="photo-camera"
@@ -151,7 +171,7 @@ export function PhotoPicker({
           accessibilityLabel={t('mobile.photoPicker.camera')}
           style={({ pressed }) => [styles.shutter, { borderColor: c.accent, opacity: busy ? 0.5 : pressed ? 0.85 : 1 }]}
         >
-          <View style={[styles.shutterInner, { backgroundColor: c.foreground }]} />
+          <View style={[styles.shutterInner, { backgroundColor: c.primaryFill }]} />
         </Pressable>
         <View style={{ width: 52 }} />
       </View>
@@ -170,14 +190,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  hint: {
+  softFrame: {
     position: 'absolute',
-    bottom: 14,
+    top: 14,
     left: 14,
     right: 14,
+    bottom: 62,
+    borderRadius: 26,
+    borderWidth: 2,
+    overflow: 'hidden',
+  },
+  tag: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: 999,
-    paddingVertical: 8,
+    backgroundColor: '#FFFFFF',
+  },
+  tagText: {
+    fontFamily: fonts.bold,
+    fontSize: 11.5,
+  },
+  hint: {
+    position: 'absolute',
+    bottom: 12,
+    left: 14,
+    right: 14,
+    minHeight: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    borderRadius: 14,
     paddingHorizontal: 14,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.14)',
   },
   side: {
     width: 52,

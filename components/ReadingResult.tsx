@@ -39,7 +39,7 @@ export function ReadingResult({ reading }: { reading: Reading }) {
             <Image source={{ uri: reading.portraitImage }} style={styles.portrait} resizeMode="cover" />
           </View>
         ) : null}
-        <Text style={{ color: c.violetSoft, fontFamily: fonts.display, fontSize: 30, lineHeight: 36, textAlign: 'center' }}>
+        <Text style={{ color: c.primary, fontFamily: fonts.display, fontSize: 30, lineHeight: 36, letterSpacing: -0.6, textAlign: 'center' }}>
           {reading.archetype}
         </Text>
         <Text style={{ color: c.secondaryForeground, fontFamily: fonts.regular, fontSize: 15, lineHeight: 21, textAlign: 'center' }}>

@@ -1,10 +1,10 @@
-/** Font family names registered in app/_layout.tsx. */
+/** Font family names registered in app/_layout.tsx (Figtree). */
 const fonts = {
-  display: 'Marcellus_400Regular',
-  regular: 'DMSans_400Regular',
-  medium: 'DMSans_500Medium',
-  semibold: 'DMSans_600SemiBold',
-  bold: 'DMSans_700Bold',
+  display: 'Figtree_800ExtraBold',
+  regular: 'Figtree_400Regular',
+  medium: 'Figtree_500Medium',
+  semibold: 'Figtree_600SemiBold',
+  bold: 'Figtree_700Bold',
 };
 
 export default fonts;

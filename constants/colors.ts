@@ -1,55 +1,76 @@
 /**
- * Nebula theme — immersive dark amethyst with gold accents.
+ * Rosewood theme — soft blush ground, rich plum for primary surfaces and
+ * actions, rose for highlights.
  *
- * The app is dark-only, so `light` mirrors `dark`; useColors() always
+ * The app is light-only, so `dark` mirrors `light`; useColors() always
  * returns this palette regardless of the device appearance.
  */
 
-const nebula = {
-  text: '#F2F0F5',
-  tint: '#E8B130',
+const rosewood = {
+  text: '#2A1235',
+  tint: '#F0567A',
 
-  background: '#0E0812',
-  foreground: '#F2F0F5',
+  background: '#FFF6F8',
+  foreground: '#2A1235',
 
-  card: '#1A1124',
-  cardForeground: '#F2F0F5',
+  card: '#FFFFFF',
+  cardForeground: '#2A1235',
 
-  // Violet for text, icons and outlines on the dark ground.
-  primary: '#9C67E4',
-  // Deeper violet for filled surfaces that carry white text.
-  primaryFill: '#7440CC',
+  // Plum for text, icons and outlines that need emphasis.
+  primary: '#4A1D6B',
+  // Plum for filled surfaces that carry white text (buttons, hero cards).
+  primaryFill: '#4A1D6B',
   primaryForeground: '#FFFFFF',
-  violetSoft: '#C7A6F5',
+  violetSoft: '#F1E6FA',
 
-  secondary: '#241B32',
-  secondaryForeground: '#E6E2EC',
+  secondary: '#F7EAF0',
+  secondaryForeground: '#4A1D6B',
 
-  muted: '#1D1528',
-  mutedForeground: '#B0A3C2',
-  subtle: '#8E80A6',
+  muted: '#FBEEF2',
+  mutedForeground: '#86708B',
+  subtle: '#A893AB',
 
-  accent: '#E8B130',
-  accentForeground: '#0E0812',
-  accentSoft: '#FFE7A8',
+  // Rose highlight.
+  accent: '#F0567A',
+  accentForeground: '#FFFFFF',
+  accentSoft: '#FFE3EA',
+  accentInk: '#D63D63',
 
-  destructive: '#F27A8A',
-  destructiveForeground: '#0E0812',
-  destructiveBorder: '#5A2330',
+  destructive: '#D6374F',
+  destructiveForeground: '#FFFFFF',
+  destructiveBorder: '#F5C2CB',
 
-  border: '#30244A',
-  borderStrong: '#4A3B66',
-  input: '#30244A',
+  border: '#F3E0E7',
+  borderStrong: '#E6C6D2',
+  input: '#F3E0E7',
 
-  tabBar: '#1E1530',
-  tabBarBorder: '#3A2C55',
+  tabBar: '#FFFFFF',
+  tabBarBorder: '#F3E0E7',
+
+  // Dark plum stage behind the camera guides and scan overlays.
+  stage: '#2A1235',
+  stageLine: 'rgba(255,179,198,0.55)',
+  stageChip: 'rgba(74,29,107,0.72)',
+
+  // Per-reading-type icon tiles: [background, icon].
+  tintFace: '#FFE3EA',
+  tintFaceInk: '#D63D63',
+  tintVoice: '#F1E6FA',
+  tintVoiceInk: '#6B2E96',
+  tintPalm: '#FFF0DC',
+  tintPalmInk: '#C2610C',
+  tintAstro: '#E2F3F7',
+  tintAstroInk: '#1B7A8F',
+
+  success: '#1E9E6A',
+  successSoft: '#DDF4EA',
 };
 
 const colors = {
-  light: nebula,
-  dark: nebula,
+  light: rosewood,
+  dark: rosewood,
   radius: 16,
-  radiusLg: 22,
+  radiusLg: 24,
 };
 
 export default colors;

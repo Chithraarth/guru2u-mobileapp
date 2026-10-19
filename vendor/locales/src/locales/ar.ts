@@ -533,6 +533,12 @@ const ar: TranslationSchema = {
       or: 'أو',
     },
     photoPicker: {
+      featureEyeShape: "شكل العين",
+      featureBrowArch: "قوس الحاجب",
+      featureSmileLines: "خطوط الابتسامة",
+      featureHeartLine: "خط القلب",
+      featureHeadLine: "خط العقل",
+      featureLifeLine: "خط الحياة",
       retake: "اختر صورة أخرى",
       privacyNote: "تُستخدم الصور فقط لإنشاء قراءتك.",
       readError: 'تعذّر علينا قراءة تلك الصورة. يرجى تجربة صورة أخرى.',

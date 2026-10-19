@@ -533,6 +533,12 @@ const pt: TranslationSchema = {
       or: 'ou',
     },
     photoPicker: {
+      featureEyeShape: "Formato dos olhos",
+      featureBrowArch: "Arco das sobrancelhas",
+      featureSmileLines: "Linhas do sorriso",
+      featureHeartLine: "Linha do coração",
+      featureHeadLine: "Linha da cabeça",
+      featureLifeLine: "Linha da vida",
       retake: "Escolher outra foto",
       privacyNote: "As fotos são usadas apenas para criar sua leitura.",
       readError: 'Não conseguimos ler essa foto. Tente outra.',

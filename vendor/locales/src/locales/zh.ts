@@ -533,6 +533,12 @@ const zh: TranslationSchema = {
       or: '或',
     },
     photoPicker: {
+      featureEyeShape: "眼型",
+      featureBrowArch: "眉形",
+      featureSmileLines: "笑纹",
+      featureHeartLine: "感情线",
+      featureHeadLine: "智慧线",
+      featureLifeLine: "生命线",
       retake: "选择其他照片",
       privacyNote: "照片仅用于生成你的解读。",
       readError: '我们无法读取那张照片。请换一张试试。',
