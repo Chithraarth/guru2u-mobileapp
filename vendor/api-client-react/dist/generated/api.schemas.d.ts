@@ -78,7 +78,27 @@ export interface Reading {
      * @nullable
      */
     compatibility?: string | null;
+    /**
+     * 1-100% judgment of the person read
+     * @nullable
+     */
+    judgment?: ReadingJudgment | null;
     createdAt: string;
+}
+export interface ReadingJudgment {
+    overall: number;
+    verdict: 'good' | 'mixed' | 'careful';
+    verdictText: string;
+    scores: {
+        trust: number;
+        honesty: number;
+        kindness: number;
+        communication: number;
+        business: number;
+        relationship: number;
+    };
+    business: string;
+    relationship: string;
 }
 export interface ReadingDaily {
     luckyGemstone: string;

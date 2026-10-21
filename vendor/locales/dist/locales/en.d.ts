@@ -477,6 +477,20 @@ declare const en: {
             deleteButton: string;
         };
         result: {
+            judgmentTitle: string;
+            judgmentSubtitle: string;
+            overall: string;
+            verdictGood: string;
+            verdictMixed: string;
+            verdictCareful: string;
+            scoreTrust: string;
+            scoreHonesty: string;
+            scoreKindness: string;
+            scoreCommunication: string;
+            scoreBusiness: string;
+            scoreRelationship: string;
+            inBusiness: string;
+            inRelationship: string;
             todaysLuck: string;
             luckyGemstone: string;
             luckyOutfit: string;

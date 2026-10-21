@@ -6,6 +6,7 @@ import { Card, PrimaryButton, SectionLabel } from '@/components/ui';
 import { readingShareText } from '@/lib/readings';
 import { KindIcon } from '@/components/nebula';
 import { Flame, HeartPulse, Sun, Users } from 'lucide-react-native';
+import { JudgmentCard } from '@/components/JudgmentCard';
 import { isProfileComplete, useMyProfile } from '@/lib/profile';
 import { useColors } from '@/hooks/useColors';
 import fonts from '@/constants/fonts';
@@ -74,6 +75,8 @@ export function ReadingResult({ reading }: { reading: Reading }) {
           ))}
         </View>
       ) : null}
+
+      {reading.judgment ? <JudgmentCard judgment={reading.judgment} /> : null}
 
       {reading.interactionTips && reading.interactionTips.length > 0 ? (
         <View style={[styles.moves, { backgroundColor: c.primaryFill }]}>
