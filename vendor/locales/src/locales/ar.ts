@@ -328,7 +328,7 @@ const ar: TranslationSchema = {
       creditsRemaining_one: 'تبقّى لك رصيد قراءة واحد ({{count}})',
       creditsRemaining_other: 'تبقّى لك {{count}} رصيد قراءة',
       creditsRemaining_zero: 'لقد نفد رصيد قراءاتك',
-      packTitle: '60 رصيد قراءة',
+      packTitle: '30 رصيد قراءة',
       packDesc: 'استخدمها لأي قراءة وجه أو كف أو صوت أو أبراج — دون اشتراك ودون انتهاء صلاحية.',
       buyButton: 'اشترِ مقابل {{price}}',
       purchasing: 'جارٍ معالجة عملية الشراء…',

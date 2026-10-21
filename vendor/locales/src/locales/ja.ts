@@ -328,7 +328,7 @@ const ja: TranslationSchema = {
       creditsRemaining_one: '鑑定クレジット残り {{count}} 回',
       creditsRemaining_other: '鑑定クレジット残り {{count}} 回',
       creditsRemaining_zero: '鑑定クレジットがなくなりました',
-      packTitle: '鑑定クレジット60回分',
+      packTitle: '鑑定クレジット30回分',
       packDesc: '顔・手相・声・占星、どの鑑定にも使えます ― サブスクリプション不要、有効期限なし。',
       buyButton: '{{price}} で購入',
       purchasing: '購入を処理しています…',

@@ -328,7 +328,7 @@ const de: TranslationSchema = {
       creditsRemaining_one: '{{count}} Deutungs-Guthaben übrig',
       creditsRemaining_other: '{{count}} Deutungs-Guthaben übrig',
       creditsRemaining_zero: 'Dein Deutungs-Guthaben ist aufgebraucht',
-      packTitle: '60 Deutungs-Guthaben',
+      packTitle: '30 Deutungs-Guthaben',
       packDesc: 'Nutze sie für jede Gesichts-, Hand-, Stimm- oder astrologische Deutung – kein Abo, kein Ablaufdatum.',
       buyButton: 'Für {{price}} kaufen',
       purchasing: 'Kauf wird verarbeitet…',

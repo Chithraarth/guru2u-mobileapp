@@ -326,7 +326,7 @@ const en = {
       creditsRemaining_one: '{{count}} reading credit left',
       creditsRemaining_other: '{{count}} reading credits left',
       creditsRemaining_zero: "You're out of reading credits",
-      packTitle: '60 Reading Credits',
+      packTitle: '30 Reading Credits',
       packDesc: 'Use them for any face, palm, voice, or astro reading — no subscription, no expiry.',
       buyButton: 'Buy for {{price}}',
       purchasing: 'Processing purchase…',

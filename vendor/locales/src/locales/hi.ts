@@ -328,7 +328,7 @@ const hi: TranslationSchema = {
       creditsRemaining_one: '{{count}} पठन क्रेडिट शेष',
       creditsRemaining_other: '{{count}} पठन क्रेडिट शेष',
       creditsRemaining_zero: 'आपके पठन क्रेडिट समाप्त हो गए हैं',
-      packTitle: '60 पठन क्रेडिट',
+      packTitle: '30 पठन क्रेडिट',
       packDesc: 'इन्हें किसी भी चेहरा, हथेली, आवाज़ या ज्योतिष पठन के लिए उपयोग करें — कोई सदस्यता नहीं, कोई समाप्ति नहीं।',
       buyButton: '{{price}} में खरीदें',
       purchasing: 'खरीद प्रोसेस की जा रही है…',

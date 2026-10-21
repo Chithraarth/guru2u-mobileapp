@@ -328,7 +328,7 @@ const zh: TranslationSchema = {
       creditsRemaining_one: '剩余 {{count}} 次解读次数',
       creditsRemaining_other: '剩余 {{count}} 次解读次数',
       creditsRemaining_zero: '你的解读次数已用完',
-      packTitle: '60 次解读次数',
+      packTitle: '30 次解读次数',
       packDesc: '可用于任意面相、手相、声音或占星解读——无需订阅，永不过期。',
       buyButton: '以 {{price}} 购买',
       purchasing: '正在处理购买……',

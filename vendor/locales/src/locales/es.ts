@@ -328,7 +328,7 @@ const es: TranslationSchema = {
       creditsRemaining_one: '{{count}} crédito de lectura restante',
       creditsRemaining_other: '{{count}} créditos de lectura restantes',
       creditsRemaining_zero: 'Te has quedado sin créditos de lectura',
-      packTitle: '60 créditos de lectura',
+      packTitle: '30 créditos de lectura',
       packDesc: 'Úsalos para cualquier lectura de rostro, palma, voz o astrología — sin suscripción, sin caducidad.',
       buyButton: 'Comprar por {{price}}',
       purchasing: 'Procesando la compra…',

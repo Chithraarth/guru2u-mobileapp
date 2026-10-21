@@ -30,8 +30,8 @@ const MODES: Mode[] = [
   { route: '/astro', kind: 'astro', titleKey: 'mobile.home.modeAstro', descKey: 'home.modeAstroDesc' },
 ];
 
-// A 60-credit pack is the reference for how full the balance ring is.
-const PACK_SIZE = 60;
+// A 30-credit pack is the reference for how full the balance ring is.
+const PACK_SIZE = 30;
 
 function greetingKey(hour: number): string {
   if (hour < 12) return 'mobile.home.goodMorning';

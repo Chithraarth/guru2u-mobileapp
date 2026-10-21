@@ -328,7 +328,7 @@ const ru: TranslationSchema = {
       creditsRemaining_one: 'Остался {{count}} кредит на прочтение',
       creditsRemaining_other: 'Осталось {{count}} кредитов на прочтение',
       creditsRemaining_zero: 'У вас закончились кредиты на прочтение',
-      packTitle: '60 кредитов на прочтение',
+      packTitle: '30 кредитов на прочтение',
       packDesc: 'Используйте их для любого прочтения по лицу, ладони, голосу или астрологии — без подписки, без срока действия.',
       buyButton: 'Купить за {{price}}',
       purchasing: 'Обрабатываем покупку…',
