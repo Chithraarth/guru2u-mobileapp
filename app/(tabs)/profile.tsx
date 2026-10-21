@@ -12,7 +12,8 @@ import { signOutUser } from '@/lib/firebase';
 import { getBillingStatus } from '@/lib/billing';
 import { LANGUAGES, setAppLanguage } from '@/lib/i18n';
 import { contactOf, displayNameOf } from '@/lib/user';
-import { UserRound } from 'lucide-react-native';
+import { Calendar, Clock, Hand, MapPin, Pencil, ScanFace, UserRound } from 'lucide-react-native';
+import { formatBirthDate, formatBirthTime, isProfileComplete, useMyProfile } from '@/lib/profile';
 import { TAB_BAR_SPACE } from '@/components/NebulaTabBar';
 import { PrimaryButton } from '@/components/ui';
 import { useColors } from '@/hooks/useColors';
@@ -30,6 +31,7 @@ export default function ProfileScreen() {
   const { user } = useAuth();
   const [showLanguages, setShowLanguages] = useState(false);
   const { data, isLoading } = useQuery({ queryKey: ['billing', 'status'], queryFn: getBillingStatus });
+  const { data: myProfile } = useMyProfile();
 
   const name = displayNameOf(user);
   const contact = contactOf(user);
@@ -118,6 +120,49 @@ export default function ProfileScreen() {
           title={t('mobile.profile.topUpNow')}
           onPress={() => router.push('/paywall')}
         />
+      </View>
+
+      <View testID="profile-details" style={[styles.card, { backgroundColor: c.card, borderColor: c.border, gap: 12 }]}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Text style={{ fontFamily: fonts.bold, fontSize: 12, letterSpacing: 1.2, textTransform: 'uppercase', color: c.accentInk }}>
+            {t('mobile.profile.yourDetails')}
+          </Text>
+          <Pressable
+            testID="profile-edit-details"
+            onPress={() => router.push('/my-details' as never)}
+            accessibilityRole="button"
+            hitSlop={8}
+            style={({ pressed }) => [styles.editBtn, { backgroundColor: c.secondary, opacity: pressed ? 0.75 : 1 }]}
+          >
+            <Pencil size={13} color={c.primary} />
+            <Text style={{ fontFamily: fonts.bold, fontSize: 13, color: c.primary }}>{t('mobile.profile.edit')}</Text>
+          </Pressable>
+        </View>
+        {isProfileComplete(myProfile) ? (
+          <View style={{ gap: 10 }}>
+            {(
+              [
+                [Calendar, t('mobile.myDetails.birthDate'), formatBirthDate(myProfile?.birthDate ?? null, i18n.language)],
+                [Clock, t('mobile.myDetails.birthTime'), formatBirthTime(myProfile?.birthTime ?? null) || t('mobile.profile.notAdded')],
+                [MapPin, t('mobile.myDetails.birthPlace'), myProfile?.birthPlace ?? ''],
+                [ScanFace, t('mobile.myDetails.yourFace'), myProfile?.hasFace ? t('mobile.myDetails.photoSaved') : t('mobile.profile.notAdded')],
+                [Hand, t('mobile.myDetails.yourPalm'), myProfile?.hasPalm ? t('mobile.myDetails.photoSaved') : t('mobile.profile.notAdded')],
+              ] as const
+            ).map(([Icon, label, value]) => (
+              <View key={label} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                <Icon size={17} color={c.mutedForeground} />
+                <Text style={{ flex: 1, fontFamily: fonts.regular, fontSize: 14, color: c.mutedForeground }}>{label}</Text>
+                <Text style={{ fontFamily: fonts.semibold, fontSize: 14, color: c.foreground, maxWidth: '55%', textAlign: 'right' }} numberOfLines={1}>
+                  {value}
+                </Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text style={{ fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, color: c.mutedForeground }}>
+            {t('mobile.profile.addDetails')}
+          </Text>
+        )}
       </View>
 
       <View style={[styles.card, { backgroundColor: c.card, borderColor: c.border, padding: 0, overflow: 'hidden' }]}>
@@ -230,6 +275,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 7,
+  },
+  editBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingHorizontal: 12,
+    height: 30,
+    borderRadius: 999,
   },
   pill: {
     flex: 1,

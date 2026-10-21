@@ -81,13 +81,14 @@ function RootLayoutNav() {
         <Stack.Screen name="face" options={{ title: t('mobile.face.title') }} />
         <Stack.Screen name="palm" options={{ title: t('mobile.palm.title') }} />
         <Stack.Screen name="voice" options={{ title: t('mobile.voice.title') }} />
-        <Stack.Screen name="astro" options={{ title: t('mobile.astro.title') }} />
+        <Stack.Screen name="astro" options={{ title: t('mobile.astro.dailyTitle') }} />
         <Stack.Screen name="insight" options={{ title: t('mobile.insight.title') }} />
         <Stack.Screen name="reading/[id]" options={{ title: '' }} />
         <Stack.Screen
           name="paywall"
           options={{ title: t('mobile.paywall.screenTitle'), presentation: 'modal' }}
         />
+        <Stack.Screen name="my-details" options={{ title: t('mobile.myDetails.title') }} />
       </Stack.Protected>
     </Stack>
   );

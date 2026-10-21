@@ -3,6 +3,7 @@ declare const en: {
         oracle: string;
         history: string;
         plans: string;
+        profile: string;
         signIn: string;
         signOut: string;
     };
@@ -240,6 +241,38 @@ declare const en: {
         returnHome: string;
     };
     mobile: {
+        onboarding: {
+            skip: string;
+            next: string;
+            getStarted: string;
+            haveAccount: string;
+            slide1Title: string;
+            slide1Body: string;
+            slide2Title: string;
+            slide2Body: string;
+            slide3Title: string;
+            slide3Body: string;
+        };
+        analyzing: {
+            title: string;
+            step1: string;
+            step2: string;
+            step3: string;
+        };
+        plans: {
+            title: string;
+            benefit1: string;
+            benefit2: string;
+            benefit3: string;
+            popular: string;
+            perDay_one: string;
+            perDay_other: string;
+            unlimited: string;
+            extraPrompt: string;
+            oneReading: string;
+            continueWith: string;
+            cancelAnytime: string;
+        };
         common: {
             back: string;
             sorry: string;
@@ -247,8 +280,13 @@ declare const en: {
             cancel: string;
         };
         tabs: {
+            insight: string;
             oracle: string;
             history: string;
+            profile: string;
+        };
+        intro: {
+            tagline: string;
         };
         settings: {
             title: string;
@@ -257,26 +295,77 @@ declare const en: {
             restartNow: string;
             restartLater: string;
         };
+        myDetails: {
+            title: string;
+            setupTitle: string;
+            setupSubtitle: string;
+            birthDate: string;
+            birthTime: string;
+            birthPlace: string;
+            placePlaceholder: string;
+            yourFace: string;
+            yourPalm: string;
+            photosTitle: string;
+            photosHint: string;
+            addPhoto: string;
+            replacePhoto: string;
+            photoSaved: string;
+            readingPhoto: string;
+            photoError: string;
+            save: string;
+            skip: string;
+            saveError: string;
+        };
+        profile: {
+            yourDetails: string;
+            edit: string;
+            addDetails: string;
+            notAdded: string;
+            currentBalance: string;
+            readingsUnit: string;
+            topUpNow: string;
+            language: string;
+            privacy: string;
+            logOut: string;
+            version: string;
+            freePlan: string;
+            manage: string;
+            upgrade: string;
+            planBilling: string;
+            help: string;
+            signOutTitle: string;
+            deleteAccount: string;
+            deleteTitle: string;
+            deleteMessage: string;
+            deleteConfirm: string;
+        };
         paywall: {
             screenTitle: string;
-            noActivePlan: string;
-            usageWithLimit: string;
-            usageNoLimit: string;
-            extraLeft_one: string;
-            extraLeft_other: string;
-            currentPlan: string;
-            subscribe: string;
-            extraTitle: string;
-            extraDesc: string;
-            buyExtra: string;
-            manageSubscription: string;
-            openBillingPortal: string;
+            creditsRemaining_one: string;
+            creditsRemaining_other: string;
+            creditsRemaining_zero: string;
+            packTitle: string;
+            packDesc: string;
+            buyButton: string;
+            purchasing: string;
+            verifying: string;
+            purchaseSuccess: string;
             account: string;
             signedIn: string;
             signOut: string;
             genericError: string;
+            storeUnavailable: string;
         };
         home: {
+            goodMorning: string;
+            goodAfternoon: string;
+            goodEvening: string;
+            today: string;
+            readingsLeft_one: string;
+            readingsLeft_other: string;
+            noReadingsLeft: string;
+            startReading: string;
+            quickReadings: string;
             appName: string;
             tagline: string;
             insightTitle: string;
@@ -287,7 +376,15 @@ declare const en: {
             modeAstro: string;
         };
         history: {
+            section_today: string;
+            section_week: string;
+            section_earlier: string;
+            filterAll: string;
+            noMatches: string;
             title: string;
+            subtitle: string;
+            searchPlaceholder: string;
+            noResults: string;
             loadError: string;
             empty: string;
             kindFace: string;
@@ -297,6 +394,7 @@ declare const en: {
             kindCombo: string;
         };
         face: {
+            title: string;
             newReading: string;
             loading: string;
             pickerLabel: string;
@@ -304,6 +402,7 @@ declare const en: {
             reveal: string;
         };
         palm: {
+            title: string;
             newReading: string;
             loading: string;
             pickerLabel: string;
@@ -311,6 +410,7 @@ declare const en: {
             reveal: string;
         };
         voice: {
+            title: string;
             newReading: string;
             loading: string;
             modeQuestion: string;
@@ -324,6 +424,14 @@ declare const en: {
             error: string;
         };
         astro: {
+            dailyTitle: string;
+            dailySubtitle: string;
+            getToday: string;
+            usesOne: string;
+            needDetailsDesc: string;
+            addDetails: string;
+            basedOn: string;
+            title: string;
             newReading: string;
             loading: string;
             birthDate: string;
@@ -337,6 +445,7 @@ declare const en: {
             error: string;
         };
         insight: {
+            title: string;
             newReading: string;
             loading: string;
             intro: string;
@@ -359,6 +468,7 @@ declare const en: {
             submit: string;
         };
         reading: {
+            share: string;
             loading: string;
             notFound: string;
             deleteTitle: string;
@@ -367,6 +477,15 @@ declare const en: {
             deleteButton: string;
         };
         result: {
+            todaysLuck: string;
+            luckyGemstone: string;
+            luckyOutfit: string;
+            luckyDay: string;
+            dayOutlook: string;
+            healthCare: string;
+            temperCare: string;
+            youAndThem: string;
+            youAndThemHint: string;
             kindFace: string;
             kindPalm: string;
             kindVoice: string;
@@ -391,12 +510,34 @@ declare const en: {
             goHome: string;
         };
         auth: {
+            forgotPassword: string;
+            continueWithPhone: string;
+            createAccount: string;
+            phoneTitle: string;
+            phoneSubtitle: string;
+            phoneLabel: string;
+            phoneCountry: string;
+            phoneCountrySearch: string;
+            phoneInvalid: string;
+            sendCode: string;
+            otpTitle: string;
+            otpSubtitle: string;
+            resendIn: string;
+            resendCode: string;
+            verifyContinue: string;
+            useEmail: string;
+            resetTitle: string;
+            resetSubtitle: string;
+            resetSent: string;
+            sendResetLink: string;
+            backToSignIn: string;
             verifyTitle: string;
             verifySignInSubtitle: string;
             verifySignUpSubtitle: string;
             verificationCode: string;
             verificationCodePlaceholder: string;
             verify: string;
+            codeSentTo: string;
             needNewCode: string;
             startOver: string;
             signInTitle: string;
@@ -413,9 +554,18 @@ declare const en: {
             noAccount: string;
             haveAccount: string;
             continueWithGoogle: string;
+            signingIn: string;
             or: string;
         };
         photoPicker: {
+            featureEyeShape: string;
+            featureBrowArch: string;
+            featureSmileLines: string;
+            featureHeartLine: string;
+            featureHeadLine: string;
+            featureLifeLine: string;
+            retake: string;
+            privacyNote: string;
             readError: string;
             cameraNeededTitle: string;
             cameraNeededDesc: string;

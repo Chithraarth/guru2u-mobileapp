@@ -1,239 +1,150 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 import { useQueryClient } from '@tanstack/react-query';
-import { Feather } from '@expo/vector-icons';
+import { Calendar, MapPin, MoonStar } from 'lucide-react-native';
 import {
   useCreateAstroReading,
   getListReadingsQueryKey,
   getGetReadingStatsQueryKey,
   type Reading,
 } from '@workspace/api-client-react';
-import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
 import { ReadingResult, ResultActions } from '@/components/ReadingResult';
-import { Card, ErrorBox, MysticLoading, PrimaryButton, Segmented, SectionLabel } from '@/components/ui';
+import { Card, MysticLoading, PrimaryButton } from '@/components/ui';
 import { ReadingCreateError } from '@/components/ReadingCreateError';
+import { formatBirthDate, formatBirthTime, isProfileComplete, localToday, useMyProfile } from '@/lib/profile';
 import { useColors } from '@/hooks/useColors';
 import fonts from '@/constants/fonts';
 
+/**
+ * The user's own daily reading, made from their saved details: lucky colour,
+ * gemstone, outfit, number and day, how the day will go, health and temper.
+ * One per day; reopening it the same day doesn't use another credit.
+ */
 export default function AstroReadingScreen() {
   const c = useColors();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [reading, setReading] = useState<Reading | null>(null);
-  const [year, setYear] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [hour, setHour] = useState('');
-  const [minute, setMinute] = useState('');
-  const [ampm, setAmpm] = useState<'AM' | 'PM'>('AM');
-  const [place, setPlace] = useState('');
-  const [formError, setFormError] = useState<string | null>(null);
+  const { data: profile, isLoading: profileLoading } = useMyProfile();
   const create = useCreateAstroReading();
 
-  const inputStyle = [styles.input, { backgroundColor: c.background, borderColor: c.border, color: c.foreground }];
-
   const submit = () => {
-    setFormError(null);
-    const y = Number(year);
-    const mo = Number(month);
-    const d = Number(day);
-    if (!y || !mo || !d || year.length !== 4 || mo < 1 || mo > 12 || d < 1 || d > 31) {
-      setFormError(t('mobile.astro.invalidDate'));
-      return;
-    }
-    if (!place.trim()) {
-      setFormError(t('mobile.astro.missingPlace'));
-      return;
-    }
-    const birthDate = `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    let birthTime: string | undefined;
-    if (hour !== '') {
-      const h12 = Number(hour);
-      const min = minute === '' ? 0 : Number(minute);
-      if (h12 < 1 || h12 > 12 || min < 0 || min > 59) {
-        setFormError(t('mobile.astro.invalidTime'));
-        return;
-      }
-      let h24 = h12 % 12;
-      if (ampm === 'PM') h24 += 12;
-      birthTime = `${String(h24).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
-    }
     create.mutate(
-      { data: { birthDate, birthPlace: place.trim(), ...(birthTime ? { birthTime } : {}) } },
+      { data: { today: localToday(), language: i18n.language?.split('-')[0] } },
       {
         onSuccess: (r) => {
           setReading(r);
           queryClient.invalidateQueries({ queryKey: getListReadingsQueryKey() });
           queryClient.invalidateQueries({ queryKey: getGetReadingStatsQueryKey() });
+          queryClient.invalidateQueries({ queryKey: ['billing', 'status'] });
         },
       },
     );
   };
 
+  const hero = (
+    <View style={{ alignItems: 'center', gap: 10, paddingVertical: 8 }}>
+      <View style={[styles.moon, { backgroundColor: c.tintAstro }]}>
+        <MoonStar size={38} color={c.tintAstroInk} />
+      </View>
+      <Text style={{ fontFamily: fonts.display, fontSize: 26, letterSpacing: -0.5, color: c.foreground, textAlign: 'center' }}>
+        {t('mobile.astro.dailyTitle')}
+      </Text>
+      <Text style={{ fontFamily: fonts.regular, fontSize: 14.5, lineHeight: 21, color: c.mutedForeground, textAlign: 'center' }}>
+        {t('mobile.astro.dailySubtitle')}
+      </Text>
+    </View>
+  );
+
   return (
-    <KeyboardAwareScrollViewCompat
+    <ScrollView
       style={{ flex: 1, backgroundColor: c.background }}
       contentContainerStyle={{ padding: 20, paddingBottom: 60, gap: 16 }}
-      bottomOffset={40}
-      keyboardShouldPersistTaps="handled"
     >
       {reading ? (
         <>
           <ReadingResult reading={reading} />
-          <ResultActions reading={reading} newLabel={t('mobile.astro.newReading')} onNew={() => setReading(null)} />
+          <ResultActions reading={reading} newLabel={t('mobile.common.back')} onNew={() => router.back()} />
         </>
       ) : create.isPending ? (
         <MysticLoading label={t('mobile.astro.loading')} />
+      ) : profileLoading ? (
+        <View style={{ paddingVertical: 80, alignItems: 'center' }}>
+          <ActivityIndicator color={c.accent} />
+        </View>
+      ) : !isProfileComplete(profile) ? (
+        <>
+          {hero}
+          <Card style={{ gap: 12 }}>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, color: c.secondaryForeground }}>
+              {t('mobile.astro.needDetailsDesc')}
+            </Text>
+            <PrimaryButton
+              testID="astro-add-details"
+              title={t('mobile.astro.addDetails')}
+              onPress={() => router.push('/my-details' as never)}
+            />
+          </Card>
+        </>
       ) : (
         <>
-          <View style={{ alignItems: 'center', gap: 10, paddingVertical: 8 }}>
-            <View style={[styles.moon, { backgroundColor: c.card, borderColor: c.border }]}>
-              <View style={[styles.moonRing, { borderColor: c.borderStrong }]} />
-              <Feather name="moon" size={34} color={c.accent} />
-            </View>
-            <Text style={{ fontFamily: fonts.regular, fontSize: 14, lineHeight: 20, color: c.mutedForeground, textAlign: 'center' }}>
-              {t('home.modeAstroDesc')}
+          {hero}
+          <Card style={{ gap: 10 }}>
+            <Text style={{ fontFamily: fonts.bold, fontSize: 12, letterSpacing: 1.2, textTransform: 'uppercase', color: c.accentInk }}>
+              {t('mobile.astro.basedOn')}
             </Text>
-          </View>
-
-          <Card>
-            <SectionLabel>{t('mobile.astro.birthDate')}</SectionLabel>
-            <View style={{ flexDirection: 'row', gap: 10 }}>
-              <TextInput
-                testID="astro-month"
-                style={[...inputStyle, { flex: 1 }]}
-                placeholder="MM"
-                placeholderTextColor={c.subtle}
-                keyboardType="number-pad"
-                maxLength={2}
-                value={month}
-                onChangeText={setMonth}
-                accessibilityLabel="Month"
-              />
-              <TextInput
-                testID="astro-day"
-                style={[...inputStyle, { flex: 1 }]}
-                placeholder="DD"
-                placeholderTextColor={c.subtle}
-                keyboardType="number-pad"
-                maxLength={2}
-                value={day}
-                onChangeText={setDay}
-                accessibilityLabel="Day"
-              />
-              <TextInput
-                testID="astro-year"
-                style={[...inputStyle, { flex: 1.4 }]}
-                placeholder="YYYY"
-                placeholderTextColor={c.subtle}
-                keyboardType="number-pad"
-                maxLength={4}
-                value={year}
-                onChangeText={setYear}
-                accessibilityLabel="Year"
-              />
+            <View style={styles.basedRow}>
+              <Calendar size={17} color={c.mutedForeground} />
+              <Text style={[styles.basedText, { color: c.foreground }]}>
+                {formatBirthDate(profile?.birthDate ?? null, i18n.language)}
+                {profile?.birthTime ? ` · ${formatBirthTime(profile.birthTime)}` : ''}
+              </Text>
             </View>
-          </Card>
-
-          <Card>
-            <SectionLabel>{t('mobile.astro.birthTime')}</SectionLabel>
-            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-              <TextInput
-                testID="astro-hour"
-                style={[...inputStyle, { flex: 1 }]}
-                placeholder="HH"
-                placeholderTextColor={c.subtle}
-                keyboardType="number-pad"
-                maxLength={2}
-                value={hour}
-                onChangeText={setHour}
-                accessibilityLabel="Hour"
-              />
-              <Text style={{ color: c.mutedForeground, fontSize: 18, fontFamily: fonts.semibold }}>:</Text>
-              <TextInput
-                testID="astro-minute"
-                style={[...inputStyle, { flex: 1 }]}
-                placeholder="MM"
-                placeholderTextColor={c.subtle}
-                keyboardType="number-pad"
-                maxLength={2}
-                value={minute}
-                onChangeText={setMinute}
-                accessibilityLabel="Minute"
-              />
-              <Segmented
-                value={ampm}
-                onChange={setAmpm}
-                options={[
-                  { value: 'AM', label: 'AM' },
-                  { value: 'PM', label: 'PM' },
-                ]}
-              />
+            <View style={styles.basedRow}>
+              <MapPin size={17} color={c.mutedForeground} />
+              <Text style={[styles.basedText, { color: c.foreground }]} numberOfLines={1}>
+                {profile?.birthPlace}
+              </Text>
             </View>
+            <Text
+              onPress={() => router.push('/my-details' as never)}
+              style={{ fontFamily: fonts.bold, fontSize: 13.5, color: c.accentInk }}
+            >
+              {t('mobile.profile.edit')}
+            </Text>
           </Card>
-
-          <Card>
-            <SectionLabel>{t('mobile.astro.birthPlace')}</SectionLabel>
-            <View style={[styles.placeRow, { backgroundColor: c.background, borderColor: c.border }]}>
-              <Feather name="map-pin" size={18} color={c.mutedForeground} />
-              <TextInput
-                testID="astro-place"
-                style={{ flex: 1, minWidth: 0, color: c.foreground, fontFamily: fonts.regular, fontSize: 16 }}
-                placeholder={t('mobile.astro.placePlaceholder')}
-                placeholderTextColor={c.subtle}
-                value={place}
-                onChangeText={setPlace}
-                accessibilityLabel={t('mobile.astro.birthPlace')}
-              />
-            </View>
-          </Card>
-
-          {formError ? <ErrorBox message={formError} /> : null}
           {create.isError ? (
             <ReadingCreateError error={create.error} fallbackMessage={t('mobile.astro.error')} />
           ) : null}
-          <PrimaryButton testID="astro-submit" title={t('mobile.astro.submit')} icon="star" onPress={submit} />
+          <PrimaryButton testID="astro-submit" title={t('mobile.astro.getToday')} icon="star" onPress={submit} />
+          <Text style={{ fontFamily: fonts.regular, fontSize: 12.5, color: c.subtle, textAlign: 'center' }}>
+            {t('mobile.astro.usesOne')}
+          </Text>
         </>
       )}
-    </KeyboardAwareScrollViewCompat>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    minWidth: 0,
-    minHeight: 50,
-    borderWidth: 1,
-    borderRadius: 14,
-    paddingHorizontal: 14,
-    fontSize: 16,
-    fontFamily: fonts.regular,
-    textAlign: 'center',
-  },
-  placeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    minHeight: 50,
-    borderWidth: 1,
-    borderRadius: 14,
-    paddingHorizontal: 14,
-  },
   moon: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    borderWidth: 1,
+    width: 88,
+    height: 88,
+    borderRadius: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  moonRing: {
-    position: 'absolute',
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 1,
-    borderStyle: 'dashed',
+  basedRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  basedText: {
+    flex: 1,
+    fontFamily: fonts.semibold,
+    fontSize: 15,
   },
 });

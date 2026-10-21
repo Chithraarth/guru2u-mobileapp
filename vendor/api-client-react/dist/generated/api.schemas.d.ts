@@ -68,7 +68,27 @@ export interface Reading {
        * @nullable
        */
     dailyHoroscope?: string | null;
+    /**
+     * Personal daily reading extras (the user's own astro reading)
+     * @nullable
+     */
+    daily?: ReadingDaily | null;
+    /**
+     * How things will go between the user and the person read
+     * @nullable
+     */
+    compatibility?: string | null;
     createdAt: string;
+}
+export interface ReadingDaily {
+    luckyGemstone: string;
+    luckyOutfit: string;
+    luckyDay: string;
+    dayOutlook: string;
+    healthCare: string;
+    temperCare: string;
+    /** The user's local date this reading is for (YYYY-MM-DD) */
+    date?: string;
 }
 export interface ReadingStats {
     total: number;
@@ -114,12 +134,14 @@ export interface VoiceReadingInput {
     language?: string;
 }
 export interface AstroReadingInput {
-    /** Birth date in YYYY-MM-DD format */
-    birthDate: string;
+    /** Birth date in YYYY-MM-DD format; omit for the user's own daily reading from their profile */
+    birthDate?: string;
     /** Birth time in HH:MM (24h) format, optional but improves accuracy */
     birthTime?: string;
     /** City / country of birth */
-    birthPlace: string;
+    birthPlace?: string;
+    /** The user's local date (YYYY-MM-DD), for the once-a-day personal reading */
+    today?: string;
     /** BCP-47 language code (e.g. "hi", "ar") the reading content should be written in; defaults to English */
     language?: string;
 }

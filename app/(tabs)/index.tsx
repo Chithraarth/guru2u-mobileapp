@@ -27,7 +27,7 @@ const MODES: Mode[] = [
   { route: '/face', kind: 'face', titleKey: 'mobile.home.modeFace', descKey: 'home.modeFaceDesc' },
   { route: '/voice', kind: 'voice', titleKey: 'mobile.home.modeVoice', descKey: 'home.modeVoiceDesc' },
   { route: '/palm', kind: 'palm', titleKey: 'mobile.home.modePalm', descKey: 'home.modePalmDesc' },
-  { route: '/astro', kind: 'astro', titleKey: 'mobile.home.modeAstro', descKey: 'home.modeAstroDesc' },
+  { route: '/astro', kind: 'astro', titleKey: 'mobile.astro.dailyTitle', descKey: 'mobile.astro.dailySubtitle' },
 ];
 
 // A 30-credit pack is the reference for how full the balance ring is.

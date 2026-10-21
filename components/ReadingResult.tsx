@@ -5,6 +5,8 @@ import type { Reading } from '@workspace/api-client-react';
 import { Card, PrimaryButton, SectionLabel } from '@/components/ui';
 import { readingShareText } from '@/lib/readings';
 import { KindIcon } from '@/components/nebula';
+import { Flame, HeartPulse, Sun, Users } from 'lucide-react-native';
+import { isProfileComplete, useMyProfile } from '@/lib/profile';
 import { useColors } from '@/hooks/useColors';
 import fonts from '@/constants/fonts';
 
@@ -21,9 +23,25 @@ function Body({ children, muted }: { children: React.ReactNode; muted?: boolean 
   return <Text style={[styles.body, { color: muted ? c.mutedForeground : c.secondaryForeground }]}>{children}</Text>;
 }
 
+/** A titled text card with a tinted icon. */
+function IconCard({ icon, tint, title, children }: { icon: React.ReactNode; tint: string; title: string; children: React.ReactNode }) {
+  const c = useColors();
+  return (
+    <Card style={{ gap: 8 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+        <View style={[styles.youThemIcon, { backgroundColor: tint }]}>{icon}</View>
+        <Text style={{ fontFamily: fonts.bold, fontSize: 15, color: c.foreground }}>{title}</Text>
+      </View>
+      <Body>{children}</Body>
+    </Card>
+  );
+}
+
 export function ReadingResult({ reading }: { reading: Reading }) {
   const c = useColors();
   const { t } = useTranslation();
+  const { data: myProfile, isSuccess: profileLoaded } = useMyProfile();
+  const hasProfile = isProfileComplete(myProfile);
 
   return (
     <View style={{ gap: 16 }}>
@@ -74,22 +92,66 @@ export function ReadingResult({ reading }: { reading: Reading }) {
       ) : null}
 
       {reading.kind === 'astro' && (reading.zodiacSign || reading.luckyColor || reading.luckyNumber) ? (
-        <View style={{ flexDirection: 'row', gap: 10 }}>
-          {(
-            [
-              ['mobile.result.sign', reading.zodiacSign],
-              ['mobile.result.luckyColor', reading.luckyColor],
-              ['mobile.result.luckyNumber', reading.luckyNumber],
-            ] as const
-          )
-            .filter(([, v]) => !!v)
-            .map(([key, value]) => (
-              <Card key={key} style={styles.astroCard}>
-                <Text style={[styles.astroLabel, { color: c.mutedForeground }]}>{t(key)}</Text>
-                <Text style={[styles.astroValue, { color: c.foreground }]}>{value}</Text>
-              </Card>
-            ))}
+        <View style={{ gap: 10 }}>
+          {reading.daily ? <SectionLabel>{t('mobile.result.todaysLuck')}</SectionLabel> : null}
+          <View style={styles.luckGrid}>
+            {(
+              [
+                ['mobile.result.sign', reading.zodiacSign],
+                ['mobile.result.luckyColor', reading.luckyColor],
+                ['mobile.result.luckyNumber', reading.luckyNumber],
+                ['mobile.result.luckyGemstone', reading.daily?.luckyGemstone],
+                ['mobile.result.luckyDay', reading.daily?.luckyDay],
+              ] as const
+            )
+              .filter(([, v]) => !!v)
+              .map(([key, value]) => (
+                <Card key={key} style={styles.astroCard}>
+                  <Text style={[styles.astroLabel, { color: c.mutedForeground }]}>{t(key)}</Text>
+                  <Text style={[styles.astroValue, { color: c.foreground }]}>{value}</Text>
+                </Card>
+              ))}
+          </View>
+          {reading.daily?.luckyOutfit ? (
+            <Card style={{ gap: 4 }}>
+              <Text style={[styles.astroLabel, { color: c.mutedForeground, textAlign: 'left' }]}>{t('mobile.result.luckyOutfit')}</Text>
+              <Text style={[styles.astroValue, { color: c.foreground, textAlign: 'left' }]}>{reading.daily.luckyOutfit}</Text>
+            </Card>
+          ) : null}
         </View>
+      ) : null}
+
+      {reading.daily ? (
+        <>
+          <IconCard icon={<Sun size={18} color={c.tintPalmInk} />} tint={c.tintPalm} title={t('mobile.result.dayOutlook')}>
+            {reading.daily.dayOutlook}
+          </IconCard>
+          <IconCard icon={<HeartPulse size={18} color={c.tintAstroInk} />} tint={c.tintAstro} title={t('mobile.result.healthCare')}>
+            {reading.daily.healthCare}
+          </IconCard>
+          <IconCard icon={<Flame size={18} color={c.tintFaceInk} />} tint={c.tintFace} title={t('mobile.result.temperCare')}>
+            {reading.daily.temperCare}
+          </IconCard>
+        </>
+      ) : null}
+
+      {reading.compatibility ? (
+        <View testID="result-you-and-them" style={[styles.youThem, { backgroundColor: c.accentSoft }]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <View style={[styles.youThemIcon, { backgroundColor: c.accent }]}>
+              <Users size={16} color={c.accentForeground} />
+            </View>
+            <Text style={{ fontFamily: fonts.bold, fontSize: 16, color: c.foreground }}>{t('mobile.result.youAndThem')}</Text>
+          </View>
+          <Text style={{ fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, color: c.foreground }}>{reading.compatibility}</Text>
+        </View>
+      ) : reading.kind !== 'astro' && profileLoaded && !hasProfile ? (
+        <Card style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+          <Users size={18} color={c.mutedForeground} />
+          <Text style={{ flex: 1, fontFamily: fonts.regular, fontSize: 13.5, lineHeight: 19, color: c.mutedForeground }}>
+            {t('mobile.result.youAndThemHint')}
+          </Text>
+        </Card>
       ) : null}
 
       {reading.dailyHoroscope ? (
@@ -188,8 +250,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  luckGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  youThem: {
+    borderRadius: 22,
+    padding: 16,
+    gap: 10,
+  },
+  youThemIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   astroCard: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: '30%',
     padding: 12,
     alignItems: 'center',
     gap: 4,
