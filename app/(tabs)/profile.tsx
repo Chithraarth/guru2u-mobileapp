@@ -13,6 +13,7 @@ import { getBillingStatus } from '@/lib/billing';
 import { LANGUAGES, setAppLanguage } from '@/lib/i18n';
 import { contactOf, displayNameOf } from '@/lib/user';
 import { Calendar, Clock, Hand, MapPin, Pencil, ScanFace, UserRound } from 'lucide-react-native';
+import { READING_LANGUAGES, readingLanguageInfo, setReadingLanguage, useReadingLanguage } from '@/lib/readingLanguage';
 import { formatBirthDate, formatBirthTime, isProfileComplete, useMyProfile } from '@/lib/profile';
 import { TAB_BAR_SPACE } from '@/components/NebulaTabBar';
 import { PrimaryButton } from '@/components/ui';
@@ -30,6 +31,8 @@ export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const [showLanguages, setShowLanguages] = useState(false);
+  const [showReadingLangs, setShowReadingLangs] = useState(false);
+  const readingLang = useReadingLanguage();
   const { data, isLoading } = useQuery({ queryKey: ['billing', 'status'], queryFn: getBillingStatus });
   const { data: myProfile } = useMyProfile();
 
@@ -201,7 +204,55 @@ export default function ProfileScreen() {
             })}
           </View>
         ) : null}
-        <Pressable testID="profile-privacy" onPress={() => Linking.openURL(PRIVACY_URL)} accessibilityRole="button" style={rowStyle(1)}>
+        <Pressable
+          testID="profile-reading-language"
+          onPress={() => setShowReadingLangs((v) => !v)}
+          accessibilityRole="button"
+          style={rowStyle(1)}
+        >
+          <Feather name="book-open" size={20} color={c.mutedForeground} />
+          <Text style={[styles.rowLabel, { color: c.foreground }]}>{t('mobile.profile.readingLanguage')}</Text>
+          <Text style={{ fontFamily: fonts.regular, fontSize: 14, color: c.mutedForeground }}>
+            {readingLanguageInfo(readingLang).nativeName}
+          </Text>
+          <Feather name={showReadingLangs ? 'chevron-up' : 'chevron-down'} size={16} color={c.subtle} />
+        </Pressable>
+        {showReadingLangs ? (
+          <View style={{ gap: 10, paddingHorizontal: 16, paddingBottom: 14 }}>
+            <Text style={{ fontFamily: fonts.regular, fontSize: 12.5, lineHeight: 18, color: c.mutedForeground }}>
+              {t('mobile.profile.readingLanguageHint')}
+            </Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+              {READING_LANGUAGES.map((lang) => {
+                const selected = lang.code === readingLang;
+                return (
+                  <Pressable
+                    key={lang.code}
+                    testID={`reading-lang-${lang.code}`}
+                    onPress={() => setReadingLanguage(lang.code)}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected }}
+                    style={[
+                      styles.langChip,
+                      { backgroundColor: selected ? c.accent : 'transparent', borderColor: selected ? c.accent : c.borderStrong },
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: selected ? fonts.semibold : fonts.medium,
+                        fontSize: 13,
+                        color: selected ? c.accentForeground : c.secondaryForeground,
+                      }}
+                    >
+                      {lang.nativeName}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        ) : null}
+        <Pressable testID="profile-privacy" onPress={() => Linking.openURL(PRIVACY_URL)} accessibilityRole="button" style={rowStyle(2)}>
           <Feather name="shield" size={20} color={c.mutedForeground} />
           <Text style={[styles.rowLabel, { color: c.foreground }]}>{t('mobile.profile.privacy')}</Text>
           <Feather name="chevron-right" size={16} color={c.subtle} />
@@ -210,7 +261,7 @@ export default function ProfileScreen() {
           testID="profile-help"
           onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('Guru 2 u feedback')}`)}
           accessibilityRole="button"
-          style={rowStyle(2)}
+          style={rowStyle(3)}
         >
           <Feather name="help-circle" size={20} color={c.mutedForeground} />
           <Text style={[styles.rowLabel, { color: c.foreground }]}>{t('mobile.profile.help')}</Text>

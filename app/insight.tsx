@@ -18,6 +18,7 @@ import { Card, Chip, ErrorBox, MysticLoading, PrimaryButton, SectionLabel } from
 import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { useColors } from '@/hooks/useColors';
 import fonts from '@/constants/fonts';
+import { getReadingLanguage } from '@/lib/readingLanguage';
 
 const CONTEXTS: { value: ComboReadingInputContext; labelKey: string }[] = [
   { value: 'interview', labelKey: 'mobile.insight.ctxInterview' },
@@ -76,6 +77,7 @@ export default function InsightReadingScreen() {
     create.mutate(
       {
         data: {
+          language: getReadingLanguage(),
           context,
           ...(image ? { imageBase64: image.base64, mimeType: image.mimeType } : {}),
           ...(birthDate ? { birthDate } : {}),

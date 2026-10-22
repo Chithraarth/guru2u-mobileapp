@@ -5,7 +5,8 @@ import type { Reading } from '@workspace/api-client-react';
 import { Card, PrimaryButton, SectionLabel } from '@/components/ui';
 import { readingShareText } from '@/lib/readings';
 import { KindIcon } from '@/components/nebula';
-import { Flame, HeartPulse, Sun, Users } from 'lucide-react-native';
+import { Flame, Heart, HeartPulse, Sun, Users } from 'lucide-react-native';
+import { ListenButton } from '@/components/ListenButton';
 import { JudgmentCard } from '@/components/JudgmentCard';
 import { isProfileComplete, useMyProfile } from '@/lib/profile';
 import { useColors } from '@/hooks/useColors';
@@ -22,6 +23,31 @@ const KIND_LABEL_KEY: Record<string, string> = {
 function Body({ children, muted }: { children: React.ReactNode; muted?: boolean }) {
   const c = useColors();
   return <Text style={[styles.body, { color: muted ? c.mutedForeground : c.secondaryForeground }]}>{children}</Text>;
+}
+
+/** Everything worth hearing in a reading, in reading order. */
+function spokenText(r: Reading): string {
+  const parts: (string | null | undefined)[] = [
+    r.archetype,
+    r.title,
+    r.judgment ? `${r.judgment.overall}%. ${r.judgment.verdictText}` : null,
+    r.dailyHoroscope,
+    r.daily?.dayOutlook,
+    r.daily?.loveLife,
+    r.daily?.healthCare,
+    r.daily?.temperCare,
+    r.daily?.luckyOutfit,
+    r.compatibility,
+    r.judgment?.business,
+    r.judgment?.relationship,
+    r.summary,
+    r.guidance,
+    ...(r.interactionTips ?? []),
+  ];
+  return parts
+    .filter((p): p is string => !!p && p.trim().length > 0)
+    .map((p) => (/[.!?।۔。！？]$/.test(p.trim()) ? p.trim() : `${p.trim()}.`))
+    .join(' ');
 }
 
 /** A titled text card with a tinted icon. */
@@ -64,6 +90,7 @@ export function ReadingResult({ reading }: { reading: Reading }) {
         <Text style={{ color: c.secondaryForeground, fontFamily: fonts.regular, fontSize: 15, lineHeight: 21, textAlign: 'center' }}>
           {reading.title}
         </Text>
+        <ListenButton text={spokenText(reading)} />
       </View>
 
       {reading.traits.length > 0 ? (
@@ -129,6 +156,11 @@ export function ReadingResult({ reading }: { reading: Reading }) {
           <IconCard icon={<Sun size={18} color={c.tintPalmInk} />} tint={c.tintPalm} title={t('mobile.result.dayOutlook')}>
             {reading.daily.dayOutlook}
           </IconCard>
+          {reading.daily.loveLife ? (
+            <IconCard icon={<Heart size={18} color={c.accent} />} tint={c.accentSoft} title={t('mobile.result.loveLife')}>
+              {reading.daily.loveLife}
+            </IconCard>
+          ) : null}
           <IconCard icon={<HeartPulse size={18} color={c.tintAstroInk} />} tint={c.tintAstro} title={t('mobile.result.healthCare')}>
             {reading.daily.healthCare}
           </IconCard>

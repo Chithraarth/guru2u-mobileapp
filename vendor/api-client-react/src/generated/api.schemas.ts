@@ -113,6 +113,8 @@ export interface ReadingDaily {
   dayOutlook: string;
   healthCare: string;
   temperCare: string;
+  /** How love life looks today (older readings may not have it) */
+  loveLife?: string;
   /** The user's local date this reading is for (YYYY-MM-DD) */
   date?: string;
 }

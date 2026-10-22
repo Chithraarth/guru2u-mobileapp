@@ -326,6 +326,8 @@ const ru: TranslationSchema = {
       saveError: "Не удалось сохранить данные. Попробуйте ещё раз.",
     },
     profile: {
+      readingLanguage: "Язык прочтений",
+      readingLanguageHint: "Прочтения пишутся и озвучиваются на этом языке.",
       yourDetails: "Ваши данные",
       edit: "Изменить",
       addDetails: "Добавьте данные о рождении, чтобы открыть ежедневное прочтение.",
@@ -493,6 +495,10 @@ const ru: TranslationSchema = {
       deleteButton: 'Удалить прочтение',
     },
     result: {
+      loveLife: "Ваша любовь сегодня",
+      listen: "Слушать",
+      stopListening: "Стоп",
+      voiceMissing: "На телефоне нет голоса для этого языка. Добавьте его: Настройки → Универсальный доступ → Устное содержимое → Голоса.",
       judgmentTitle: "Наш вердикт",
       judgmentSubtitle: "Оценка человека от 1 до 100%",
       overall: "Итого",

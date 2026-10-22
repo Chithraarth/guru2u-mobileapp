@@ -319,6 +319,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -479,6 +481,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -935,6 +941,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -1095,6 +1103,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -1551,6 +1563,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -1711,6 +1725,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -2167,6 +2185,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -2327,6 +2347,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -2783,6 +2807,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -2943,6 +2969,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -3399,6 +3429,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -3559,6 +3591,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -4015,6 +4051,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -4175,6 +4213,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -4631,6 +4673,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -4791,6 +4835,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -5247,6 +5295,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -5407,6 +5457,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;
@@ -5863,6 +5917,8 @@ export declare const translations: {
                 saveError: string;
             };
             profile: {
+                readingLanguage: string;
+                readingLanguageHint: string;
                 yourDetails: string;
                 edit: string;
                 addDetails: string;
@@ -6023,6 +6079,10 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                loveLife: string;
+                listen: string;
+                stopListening: string;
+                voiceMissing: string;
                 judgmentTitle: string;
                 judgmentSubtitle: string;
                 overall: string;

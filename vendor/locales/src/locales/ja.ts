@@ -326,6 +326,8 @@ const ja: TranslationSchema = {
       saveError: "保存できませんでした。もう一度お試しください。",
     },
     profile: {
+      readingLanguage: "鑑定の言語",
+      readingLanguageHint: "鑑定はこの言語で書かれ、読み上げられます。",
       yourDetails: "あなたの情報",
       edit: "編集",
       addDetails: "生年月日などを追加すると毎日の鑑定が使えます。",
@@ -493,6 +495,10 @@ const ja: TranslationSchema = {
       deleteButton: '鑑定を削除',
     },
     result: {
+      loveLife: "今日の恋愛運",
+      listen: "聞く",
+      stopListening: "停止",
+      voiceMissing: "この言語の音声がまだありません。設定 → アクセシビリティ → 読み上げコンテンツ → 声 で追加してください。",
       judgmentTitle: "私たちの判定",
       judgmentSubtitle: "この人のスコア（1〜100%）",
       overall: "総合",

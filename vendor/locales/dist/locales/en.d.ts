@@ -317,6 +317,8 @@ declare const en: {
             saveError: string;
         };
         profile: {
+            readingLanguage: string;
+            readingLanguageHint: string;
             yourDetails: string;
             edit: string;
             addDetails: string;
@@ -477,6 +479,10 @@ declare const en: {
             deleteButton: string;
         };
         result: {
+            loveLife: string;
+            listen: string;
+            stopListening: string;
+            voiceMissing: string;
             judgmentTitle: string;
             judgmentSubtitle: string;
             overall: string;

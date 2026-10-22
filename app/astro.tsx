@@ -16,6 +16,7 @@ import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { formatBirthDate, formatBirthTime, isProfileComplete, localToday, useMyProfile } from '@/lib/profile';
 import { useColors } from '@/hooks/useColors';
 import fonts from '@/constants/fonts';
+import { getReadingLanguage } from '@/lib/readingLanguage';
 
 /**
  * The user's own daily reading, made from their saved details: lucky colour,
@@ -33,7 +34,7 @@ export default function AstroReadingScreen() {
 
   const submit = () => {
     create.mutate(
-      { data: { today: localToday(), language: i18n.language?.split('-')[0] } },
+      { data: { today: localToday(), language: getReadingLanguage() } },
       {
         onSuccess: (r) => {
           setReading(r);

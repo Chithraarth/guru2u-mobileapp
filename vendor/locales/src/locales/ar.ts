@@ -326,6 +326,8 @@ const ar: TranslationSchema = {
       saveError: "تعذّر حفظ بياناتك. حاول مرة أخرى.",
     },
     profile: {
+      readingLanguage: "لغة القراءة",
+      readingLanguageHint: "تُكتب القراءات وتُقرأ بصوت عالٍ بهذه اللغة.",
       yourDetails: "بياناتك",
       edit: "تعديل",
       addDetails: "أضف بيانات ميلادك لتفتح قراءتك اليومية.",
@@ -493,6 +495,10 @@ const ar: TranslationSchema = {
       deleteButton: 'حذف القراءة',
     },
     result: {
+      loveLife: "حياتك العاطفية اليوم",
+      listen: "استمع",
+      stopListening: "إيقاف",
+      voiceMissing: "لا يحتوي هاتفك على صوت لهذه اللغة. أضفه من الإعدادات ← تسهيلات الاستخدام ← المحتوى المنطوق ← الأصوات.",
       judgmentTitle: "حكمنا",
       judgmentSubtitle: "تقييم هذا الشخص من 1 إلى 100٪",
       overall: "الإجمالي",

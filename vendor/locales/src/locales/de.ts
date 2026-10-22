@@ -326,6 +326,8 @@ const de: TranslationSchema = {
       saveError: "Deine Angaben konnten nicht gespeichert werden. Bitte versuche es erneut.",
     },
     profile: {
+      readingLanguage: "Sprache der Deutungen",
+      readingLanguageHint: "Deutungen werden in dieser Sprache geschrieben und vorgelesen.",
       yourDetails: "Deine Angaben",
       edit: "Bearbeiten",
       addDetails: "Füge deine Geburtsdaten hinzu, um deine Tagesdeutung freizuschalten.",
@@ -493,6 +495,10 @@ const de: TranslationSchema = {
       deleteButton: 'Deutung löschen',
     },
     result: {
+      loveLife: "Dein Liebesleben heute",
+      listen: "Anhören",
+      stopListening: "Stopp",
+      voiceMissing: "Dein Telefon hat noch keine Stimme für diese Sprache. Füge eine unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen hinzu.",
       judgmentTitle: "Unser Urteil",
       judgmentSubtitle: "So schneidet diese Person ab, von 1 bis 100 %",
       overall: "Gesamt",

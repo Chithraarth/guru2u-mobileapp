@@ -326,6 +326,8 @@ const hi: TranslationSchema = {
       saveError: "आपकी जानकारी सहेजी नहीं जा सकी। कृपया फिर कोशिश करें।",
     },
     profile: {
+      readingLanguage: "रीडिंग की भाषा",
+      readingLanguageHint: "रीडिंग इसी भाषा में लिखी और सुनाई जाती है।",
       yourDetails: "आपकी जानकारी",
       edit: "बदलें",
       addDetails: "अपनी दैनिक रीडिंग के लिए जन्म का विवरण जोड़ें।",
@@ -493,6 +495,10 @@ const hi: TranslationSchema = {
       deleteButton: 'पठन हटाएँ',
     },
     result: {
+      loveLife: "आज आपका प्रेम जीवन",
+      listen: "सुनें",
+      stopListening: "रोकें",
+      voiceMissing: "आपके फ़ोन में इस भाषा की आवाज़ नहीं है। सेटिंग्स → एक्सेसिबिलिटी → स्पोकन कंटेंट → वॉइस में जोड़ें।",
       judgmentTitle: "हमारा आकलन",
       judgmentSubtitle: "यह व्यक्ति 1 से 100% में कितना है",
       overall: "कुल",

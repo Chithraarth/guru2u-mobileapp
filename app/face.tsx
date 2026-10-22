@@ -13,6 +13,7 @@ import { ReadingResult, ResultActions } from '@/components/ReadingResult';
 import { MysticLoading, PrimaryButton } from '@/components/ui';
 import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { useColors } from '@/hooks/useColors';
+import { getReadingLanguage } from '@/lib/readingLanguage';
 
 export default function FaceReadingScreen() {
   const c = useColors();
@@ -25,7 +26,7 @@ export default function FaceReadingScreen() {
   const submit = () => {
     if (!image) return;
     create.mutate(
-      { data: { imageBase64: image.base64, mimeType: image.mimeType } },
+      { data: { imageBase64: image.base64, mimeType: image.mimeType, language: getReadingLanguage() } },
       {
         onSuccess: (r) => {
           setReading(r);

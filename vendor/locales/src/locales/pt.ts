@@ -326,6 +326,8 @@ const pt: TranslationSchema = {
       saveError: "Não conseguimos salvar seus dados. Tente novamente.",
     },
     profile: {
+      readingLanguage: "Idioma das leituras",
+      readingLanguageHint: "As leituras são escritas e lidas em voz alta neste idioma.",
       yourDetails: "Seus dados",
       edit: "Editar",
       addDetails: "Adicione seus dados de nascimento para liberar sua leitura diária.",
@@ -493,6 +495,10 @@ const pt: TranslationSchema = {
       deleteButton: 'Excluir leitura',
     },
     result: {
+      loveLife: "Sua vida amorosa hoje",
+      listen: "Ouvir",
+      stopListening: "Parar",
+      voiceMissing: "Seu telefone ainda não tem voz para este idioma. Adicione em Ajustes → Acessibilidade → Conteúdo Falado → Vozes.",
       judgmentTitle: "Nosso julgamento",
       judgmentSubtitle: "Como essa pessoa pontua, de 1 a 100%",
       overall: "Geral",

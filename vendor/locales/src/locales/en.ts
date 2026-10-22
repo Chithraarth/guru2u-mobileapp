@@ -324,6 +324,8 @@ const en = {
       saveError: "We couldn't save your details. Please try again.",
     },
     profile: {
+      readingLanguage: "Reading language",
+      readingLanguageHint: "Readings are written and read aloud in this language.",
       yourDetails: "Your details",
       edit: "Edit",
       addDetails: "Add your birth details to unlock your daily reading.",
@@ -491,6 +493,10 @@ const en = {
       deleteButton: 'Delete reading',
     },
     result: {
+      loveLife: "Your love life today",
+      listen: "Listen",
+      stopListening: "Stop",
+      voiceMissing: "Your phone has no voice for this language yet. Add one in Settings → Accessibility → Spoken Content → Voices.",
       judgmentTitle: "Our judgment",
       judgmentSubtitle: "How this person scores, from 1 to 100%",
       overall: "Overall",

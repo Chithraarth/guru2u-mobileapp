@@ -326,6 +326,8 @@ const zh: TranslationSchema = {
       saveError: "无法保存你的资料，请重试。",
     },
     profile: {
+      readingLanguage: "解读语言",
+      readingLanguageHint: "解读将以此语言撰写并朗读。",
       yourDetails: "你的资料",
       edit: "编辑",
       addDetails: "添加出生信息即可解锁每日解读。",
@@ -493,6 +495,10 @@ const zh: TranslationSchema = {
       deleteButton: '删除解读',
     },
     result: {
+      loveLife: "今日爱情运",
+      listen: "收听",
+      stopListening: "停止",
+      voiceMissing: "你的手机暂无此语言的语音。请在 设置 → 辅助功能 → 朗读内容 → 声音 中添加。",
       judgmentTitle: "我们的判断",
       judgmentSubtitle: "此人的评分（1–100%）",
       overall: "总体",

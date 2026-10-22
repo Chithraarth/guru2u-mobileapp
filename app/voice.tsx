@@ -16,6 +16,7 @@ import { Card, Chip, MysticLoading, SectionLabel } from '@/components/ui';
 import { ReadingCreateError } from '@/components/ReadingCreateError';
 import { useColors } from '@/hooks/useColors';
 import fonts from '@/constants/fonts';
+import { getReadingLanguage } from '@/lib/readingLanguage';
 
 const MODES: { value: VoiceReadingInputMode; labelKey: string; hintKey: string }[] = [
   { value: 'note', labelKey: 'mobile.voice.modeNote', hintKey: 'mobile.voice.modeNoteHint' },
@@ -49,7 +50,7 @@ export default function VoiceReadingScreen() {
 
   const submit = (audioBase64: string) => {
     create.mutate(
-      { data: { audioBase64, mode } },
+      { data: { audioBase64, mode, language: getReadingLanguage() } },
       {
         onSuccess: (r) => {
           setReading(r);
