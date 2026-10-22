@@ -495,6 +495,13 @@ const es: TranslationSchema = {
       deleteButton: 'Eliminar lectura',
     },
     result: {
+      askTitle: "Hazle una pregunta a Guru",
+      askHint: "Pregunta lo que quieras sobre esta lectura. Cada pregunta usa 1 lectura.",
+      askPlaceholder: "p. ej., ¿Debo firmar el trato hoy?",
+      askButton: "Preguntar a Guru",
+      asking: "Guru está pensando…",
+      youAsked: "Preguntaste",
+      askError: "Guru no pudo responder ahora. Inténtalo de nuevo.",
       loveLife: "Tu vida amorosa hoy",
       listen: "Escuchar",
       stopListening: "Detener",

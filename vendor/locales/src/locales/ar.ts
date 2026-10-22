@@ -495,6 +495,13 @@ const ar: TranslationSchema = {
       deleteButton: 'حذف القراءة',
     },
     result: {
+      askTitle: "اسأل غورو سؤالاً",
+      askHint: "اسأل أي شيء عن هذه القراءة. كل سؤال يستخدم قراءة واحدة.",
+      askPlaceholder: "مثلاً: هل أوقّع الصفقة اليوم؟",
+      askButton: "اسأل غورو",
+      asking: "غورو يفكّر…",
+      youAsked: "سألت",
+      askError: "تعذّر على غورو الإجابة الآن. حاول مرة أخرى.",
       loveLife: "حياتك العاطفية اليوم",
       listen: "استمع",
       stopListening: "إيقاف",

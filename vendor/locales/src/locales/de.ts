@@ -495,6 +495,13 @@ const de: TranslationSchema = {
       deleteButton: 'Deutung löschen',
     },
     result: {
+      askTitle: "Stell Guru eine Frage",
+      askHint: "Frag alles zu dieser Deutung. Jede Frage kostet 1 Deutung.",
+      askPlaceholder: "z. B. Soll ich heute den Vertrag unterschreiben?",
+      askButton: "Guru fragen",
+      asking: "Guru denkt nach…",
+      youAsked: "Deine Frage",
+      askError: "Guru konnte gerade nicht antworten. Bitte versuche es erneut.",
       loveLife: "Dein Liebesleben heute",
       listen: "Anhören",
       stopListening: "Stopp",

@@ -495,6 +495,13 @@ const hi: TranslationSchema = {
       deleteButton: 'पठन हटाएँ',
     },
     result: {
+      askTitle: "गुरु से सवाल पूछें",
+      askHint: "इस रीडिंग के बारे में कुछ भी पूछें। हर सवाल में 1 रीडिंग लगती है।",
+      askPlaceholder: "जैसे: क्या मुझे आज डील साइन करनी चाहिए?",
+      askButton: "गुरु से पूछें",
+      asking: "गुरु सोच रहे हैं…",
+      youAsked: "आपने पूछा",
+      askError: "गुरु अभी जवाब नहीं दे सके। कृपया फिर कोशिश करें।",
       loveLife: "आज आपका प्रेम जीवन",
       listen: "सुनें",
       stopListening: "रोकें",

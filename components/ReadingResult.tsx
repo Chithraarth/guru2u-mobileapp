@@ -7,6 +7,7 @@ import { readingShareText } from '@/lib/readings';
 import { KindIcon } from '@/components/nebula';
 import { Flame, Heart, HeartPulse, Sun, Users } from 'lucide-react-native';
 import { ListenButton } from '@/components/ListenButton';
+import { AskGuru } from '@/components/AskGuru';
 import { JudgmentCard } from '@/components/JudgmentCard';
 import { isProfileComplete, useMyProfile } from '@/lib/profile';
 import { useColors } from '@/hooks/useColors';
@@ -22,7 +23,9 @@ const KIND_LABEL_KEY: Record<string, string> = {
 
 function Body({ children, muted }: { children: React.ReactNode; muted?: boolean }) {
   const c = useColors();
-  return <Text style={[styles.body, { color: muted ? c.mutedForeground : c.secondaryForeground }]}>{children}</Text>;
+  // Older readings can contain literal "\\n" sequences from the AI; show them as line breaks.
+  const content = typeof children === 'string' ? children.replace(/\\r\\n|\\n/g, '\n') : children;
+  return <Text style={[styles.body, { color: muted ? c.mutedForeground : c.secondaryForeground }]}>{content}</Text>;
 }
 
 /** Everything worth hearing in a reading, in reading order. */
@@ -228,6 +231,8 @@ export function ReadingResult({ reading }: { reading: Reading }) {
         <SectionLabel>{t('mobile.result.guidance')}</SectionLabel>
         <Body>{reading.guidance}</Body>
       </Card>
+
+      <AskGuru readingId={reading.id} />
 
       {reading.transcript ? (
         <Card>

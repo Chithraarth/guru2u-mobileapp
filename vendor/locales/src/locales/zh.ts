@@ -495,6 +495,13 @@ const zh: TranslationSchema = {
       deleteButton: '删除解读',
     },
     result: {
+      askTitle: "向 Guru 提问",
+      askHint: "可以就这次解读提出任何问题。每个问题消耗 1 次解读。",
+      askPlaceholder: "例如：我今天该签这个合同吗？",
+      askButton: "问 Guru",
+      asking: "Guru 正在思考…",
+      youAsked: "你的问题",
+      askError: "Guru 暂时无法回答，请重试。",
       loveLife: "今日爱情运",
       listen: "收听",
       stopListening: "停止",

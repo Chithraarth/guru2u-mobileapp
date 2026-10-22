@@ -493,6 +493,13 @@ const en = {
       deleteButton: 'Delete reading',
     },
     result: {
+      askTitle: "Ask Guru a question",
+      askHint: "Ask anything about this reading. Each question uses 1 reading.",
+      askPlaceholder: "e.g. Should I sign the deal today?",
+      askButton: "Ask Guru",
+      asking: "Guru is thinking…",
+      youAsked: "You asked",
+      askError: "Guru couldn't answer right now. Please try again.",
       loveLife: "Your love life today",
       listen: "Listen",
       stopListening: "Stop",

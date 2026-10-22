@@ -495,6 +495,13 @@ const ja: TranslationSchema = {
       deleteButton: '鑑定を削除',
     },
     result: {
+      askTitle: "グルに質問する",
+      askHint: "この鑑定について何でも質問できます。1つの質問につき1回分を使います。",
+      askPlaceholder: "例：今日契約にサインすべき？",
+      askButton: "グルに聞く",
+      asking: "グルが考えています…",
+      youAsked: "あなたの質問",
+      askError: "今は回答できませんでした。もう一度お試しください。",
       loveLife: "今日の恋愛運",
       listen: "聞く",
       stopListening: "停止",

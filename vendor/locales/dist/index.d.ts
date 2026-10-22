@@ -481,6 +481,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -1103,6 +1110,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -1725,6 +1739,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -2347,6 +2368,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -2969,6 +2997,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -3591,6 +3626,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -4213,6 +4255,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -4835,6 +4884,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -5457,6 +5513,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;
@@ -6079,6 +6142,13 @@ export declare const translations: {
                 deleteButton: string;
             };
             result: {
+                askTitle: string;
+                askHint: string;
+                askPlaceholder: string;
+                askButton: string;
+                asking: string;
+                youAsked: string;
+                askError: string;
                 loveLife: string;
                 listen: string;
                 stopListening: string;

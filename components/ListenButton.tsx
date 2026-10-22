@@ -27,7 +27,7 @@ function chunk(text: string, max = 3000): string[] {
 }
 
 /** Reads the given text aloud through the speaker in the reading language. */
-export function ListenButton({ text }: { text: string }) {
+export function ListenButton({ text, compact = false }: { text: string; compact?: boolean }) {
   const c = useColors();
   const { t } = useTranslation();
   const readingLang = useReadingLanguage();
@@ -76,11 +76,12 @@ export function ListenButton({ text }: { text: string }) {
         accessibilityLabel={speaking ? t('mobile.result.stopListening') : t('mobile.result.listen')}
         style={({ pressed }) => [
           styles.button,
+          compact && styles.compact,
           { backgroundColor: speaking ? c.accent : c.primaryFill, opacity: pressed ? 0.85 : 1 },
         ]}
       >
-        {speaking ? <Square size={15} color="#FFFFFF" fill="#FFFFFF" /> : <Volume2 size={18} color="#FFFFFF" />}
-        <Text style={{ fontFamily: fonts.bold, fontSize: 14, color: '#FFFFFF' }}>
+        {speaking ? <Square size={compact ? 12 : 15} color="#FFFFFF" fill="#FFFFFF" /> : <Volume2 size={compact ? 15 : 18} color="#FFFFFF" />}
+        <Text style={{ fontFamily: fonts.bold, fontSize: compact ? 12.5 : 14, color: '#FFFFFF' }}>
           {speaking ? t('mobile.result.stopListening') : t('mobile.result.listen')}
         </Text>
       </Pressable>
@@ -101,5 +102,10 @@ const styles = StyleSheet.create({
     height: 42,
     paddingHorizontal: 20,
     borderRadius: 999,
+  },
+  compact: {
+    height: 32,
+    paddingHorizontal: 12,
+    gap: 6,
   },
 });
