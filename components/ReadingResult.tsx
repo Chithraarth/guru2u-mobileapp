@@ -6,7 +6,7 @@ import { Card, PrimaryButton, SectionLabel } from '@/components/ui';
 import { readingShareText } from '@/lib/readings';
 import { KindIcon } from '@/components/nebula';
 import { Flame, Heart, HeartPulse, Sun, Users } from 'lucide-react-native';
-import { ListenButton } from '@/components/ListenButton';
+import { ListenButton, SpeakIcon } from '@/components/ListenButton';
 import { AskGuru } from '@/components/AskGuru';
 import { JudgmentCard } from '@/components/JudgmentCard';
 import { isProfileComplete, useMyProfile } from '@/lib/profile';
@@ -63,6 +63,7 @@ function IconCard({ icon, tint, title, children }: { icon: React.ReactNode; tint
         <Text style={{ fontFamily: fonts.bold, fontSize: 15, color: c.foreground }}>{title}</Text>
       </View>
       <Body>{children}</Body>
+      {typeof children === 'string' ? <SpeakIcon text={children} /> : null}
     </Card>
   );
 }
@@ -121,6 +122,7 @@ export function ReadingResult({ reading }: { reading: Reading }) {
               </Text>
             </View>
           ))}
+          <SpeakIcon text={reading.interactionTips.map((tip, i) => `${i + 1}. ${tip}`).join(' ')} onDark />
         </View>
       ) : null}
 
@@ -149,6 +151,7 @@ export function ReadingResult({ reading }: { reading: Reading }) {
             <Card style={{ gap: 4 }}>
               <Text style={[styles.astroLabel, { color: c.mutedForeground, textAlign: 'left' }]}>{t('mobile.result.luckyOutfit')}</Text>
               <Text style={[styles.astroValue, { color: c.foreground, textAlign: 'left' }]}>{reading.daily.luckyOutfit}</Text>
+              <SpeakIcon text={reading.daily.luckyOutfit} />
             </Card>
           ) : null}
         </View>
@@ -182,6 +185,7 @@ export function ReadingResult({ reading }: { reading: Reading }) {
             <Text style={{ fontFamily: fonts.bold, fontSize: 16, color: c.foreground }}>{t('mobile.result.youAndThem')}</Text>
           </View>
           <Text style={{ fontFamily: fonts.regular, fontSize: 15, lineHeight: 22, color: c.foreground }}>{reading.compatibility}</Text>
+          <SpeakIcon text={reading.compatibility} />
         </View>
       ) : reading.kind !== 'astro' && profileLoaded && !hasProfile ? (
         <Card style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
@@ -196,12 +200,14 @@ export function ReadingResult({ reading }: { reading: Reading }) {
         <Card>
           <SectionLabel>{t('mobile.result.todaysHoroscope')}</SectionLabel>
           <Body>{reading.dailyHoroscope}</Body>
+          <SpeakIcon text={reading.dailyHoroscope} />
         </Card>
       ) : null}
 
       <Card>
         <SectionLabel>{t('mobile.result.summary')}</SectionLabel>
         <Body>{reading.summary}</Body>
+        <SpeakIcon text={reading.summary} />
       </Card>
 
       {reading.strengths.length > 0 ? (
@@ -217,6 +223,7 @@ export function ReadingResult({ reading }: { reading: Reading }) {
               </View>
             ))}
           </View>
+          <SpeakIcon text={reading.strengths.join('. ')} />
         </Card>
       ) : null}
 
@@ -224,12 +231,14 @@ export function ReadingResult({ reading }: { reading: Reading }) {
         <Card>
           <SectionLabel>{t('mobile.result.deeperAnalysis')}</SectionLabel>
           <Body>{reading.details}</Body>
+          <SpeakIcon text={reading.details} />
         </Card>
       ) : null}
 
       <Card style={{ borderColor: c.primary }}>
         <SectionLabel>{t('mobile.result.guidance')}</SectionLabel>
         <Body>{reading.guidance}</Body>
+        <SpeakIcon text={reading.guidance} />
       </Card>
 
       <AskGuru readingId={reading.id} />

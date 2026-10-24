@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Svg, { Circle } from 'react-native-svg';
 import { Briefcase, Heart, ShieldAlert, ShieldCheck, ShieldQuestion } from 'lucide-react-native';
 import type { ReadingJudgment } from '@workspace/api-client-react';
+import { SpeakIcon } from '@/components/ListenButton';
 import { useColors } from '@/hooks/useColors';
 import colors from '@/constants/colors';
 import fonts from '@/constants/fonts';
@@ -123,6 +124,15 @@ export function JudgmentCard({ judgment }: { judgment: ReadingJudgment }) {
           </Text>
         </View>
       ) : null}
+      <SpeakIcon
+        text={[
+          `${judgment.overall}%. ${verdict.label}. ${judgment.verdictText}`,
+          judgment.business ? `${t('mobile.result.inBusiness')}: ${judgment.business}` : '',
+          judgment.relationship ? `${t('mobile.result.inRelationship')}: ${judgment.relationship}` : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      />
     </View>
   );
 }

@@ -17,7 +17,7 @@
       },
       "backgroundColor": "#FFF6F8",
       "bundleIdentifier": "com.guru2u.app",
-      "buildNumber": "9",
+      "buildNumber": "10",
       "config": {
         "usesNonExemptEncryption": false
       }
